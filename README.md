@@ -1,16 +1,66 @@
-# React + Vite
+# Athar – Museums Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive Museums page for **Athar**, a website about Egypt's museums. Built with **React.js** as part of a graduation project.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Responsive layout (desktop, tablet, mobile)
+- Live search by museum name
+- Filter by location (city)
+- Filter by museum type
+- Sort by popularity or name (A-Z)
+- Reusable React components
 
-## React Compiler
+## Built With
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React.js
+- Vite
+- JavaScript (ES6+)
+- CSS3
+- Poppins font (Google Fonts)
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+src/
+├── assets/images/   # Logo and hero image
+├── components/      # Navbar, Hero, FilterSidebar, MuseumList, MuseumCard
+├── data/            # Museums data
+├── pages/           # MuseumsPage
+├── styles/          # CSS files for each component
+├── App.jsx
+├── main.jsx
+└── index.css
+```
+
+## Getting Started
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/clarafahem-cell/athar-museums.git
+```
+
+2. Go into the project folder:
+
+```bash
+cd athar-museums
+```
+
+3. Install dependencies:
+
+```bash
+npm install
+```
+
+4. Run the development server:
+
+```bash
+npm run dev
+```
+
+5. Open `http://localhost:5173` in your browser.
+
+## Author
+
+Clara Fahem
