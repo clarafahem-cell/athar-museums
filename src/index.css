@@ -1,0 +1,51 @@
+:root {
+  /* الألوان (مأخوذة من التصميم) */
+  --color-navy: #1e3a5f;
+  --color-gold: #b39a52;
+  --color-gold-dark: #9c8442;
+  --color-bg: #faf8f1;
+  --color-card: #fbfaf5;
+  --color-border: #e8e4d6;
+  --color-text: #4a4a4a;
+  --color-muted: #7a7a7a;
+  --color-placeholder: #e6e3d8;
+
+  /* الخط */
+  --font-main: "Poppins", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
