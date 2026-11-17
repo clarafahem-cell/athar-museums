@@ -1,12 +1,8 @@
 import "../styles/Hero.css";
-import heroBg from "../assets/images/hero-bg.png";
 
 function Hero() {
   return (
     <section className="hero">
-      <img className="hero__bg" src={heroBg} alt="" />
-      <div className="hero__overlay"></div>
-
       <div className="hero__content">
         <p className="hero__tags">
           <span>EXPLORE</span> · <span>DISCOVER</span> · <span>EXPERIENCE</span>

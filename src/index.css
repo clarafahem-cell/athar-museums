@@ -1,4 +1,13 @@
 :root {
+  --login-bg: #fbf9f5;
+  --login-gold: #ae9140;
+  --login-gold-dark: #967b2f;
+  --login-navy: #1b365d;
+  --login-muted: #6b7280;
+  --login-field-bg: #f7f6f6;
+  --login-border: #d9d9de;
+}
+:root {
   /* الألوان (مأخوذة من التصميم) */
   --color-navy: #1e3a5f;
   --color-gold: #b39a52;

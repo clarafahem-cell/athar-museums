@@ -1,57 +1,58 @@
+
 const museums = [
   {
     id: 1,
-    name: "The Egyptian Museum",
-    city: "Cairo",
-    type: "National Museum",
-    popularity: 100,
-    description:
-      "Home to the world’s largest collection of Pharaonic antiquities, including the famous treasures of Tutankhamun.",
-  },
-  {
-    id: 2,
     name: "Grand Egyptian Museum",
     city: "Giza",
     type: "National Museum",
+    popularity: 100,
+    description:
+      "A world-class museum featuring ancient Egyptian artifacts and the complete collection of King Tutankhamun's treasures.",
+  },
+  {
+    id: 2,
+    name: "The Egyptian Museum",
+    city: "Cairo",
+    type: "National Museum",
     popularity: 95,
     description:
-      "A modern masterpiece showcasing Egypt’s ancient civilization in a stunning, immersive experience.",
+      "One of the most famous museums in Egypt, housing thousands of ancient Egyptian artifacts from different historical periods.",
   },
   {
     id: 3,
-    name: "Alexandria National Museum",
-    city: "Alexandria",
+    name: "National Museum of Egyptian Civilization",
+    city: "Cairo",
     type: "National Museum",
-    popularity: 80,
+    popularity: 92,
     description:
-      "A unique collection of artifacts from Alexandria and the Greco-Roman period.",
+      "A museum presenting the history of Egyptian civilization from prehistoric times to the modern era, including the Royal Mummies Hall.",
   },
   {
     id: 4,
-    name: "Coptic Museum",
-    city: "Cairo",
-    type: "Specialized Museum",
-    popularity: 70,
+    name: "Luxor Museum",
+    city: "Luxor",
+    type: "Archaeological Museum",
+    popularity: 84,
     description:
-      "Discover the rich history of Coptic art and Christianity in Egypt.",
+      "A distinguished museum displaying ancient Egyptian statues, royal artifacts, and archaeological discoveries from Luxor.",
   },
   {
     id: 5,
-    name: "Nubian Museum",
-    city: "Aswan",
+    name: "Museum of Islamic Art",
+    city: "Cairo",
     type: "Specialized Museum",
-    popularity: 65,
+    popularity: 78,
     description:
-      "Explore the heritage, culture and history of Nubia and its people.",
+      "A remarkable collection of Islamic art, including manuscripts, ceramics, textiles, metalwork, and historical objects.",
   },
   {
     id: 6,
-    name: "Faiyum Museum",
-    city: "Faiyum",
-    type: "Archeological Site",
-    popularity: 50,
+    name: "Nubian Museum",
+    city: "Aswan",
+    type: "Specialized Museum",
+    popularity: 75,
     description:
-      "A hidden gem featuring unique artifacts from the Faiyum region.",
+      "A museum dedicated to Nubian history, culture, traditions, and archaeological heritage.",
   },
 ];
 

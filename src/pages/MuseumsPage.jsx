@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../styles/MuseumsPage.css";
+import heroBg from "../assets/images/hero-bg.png";
 import Hero from "../components/Hero";
 import FilterSidebar from "../components/FilterSidebar";
 import MuseumList from "../components/MuseumList";
@@ -29,7 +30,12 @@ function MuseumsPage() {
 
   return (
     <main className="museums-page">
+      <div className="museums-page__bg">
+        <img src={heroBg} alt="" />
+      </div>
+
       <Hero />
+
       <section className="museums-page__body">
         <FilterSidebar
           search={search}

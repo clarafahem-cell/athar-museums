@@ -1,0 +1,196 @@
+.login-page {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  background: var(--login-bg);
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ===== الصورة على اليمين مع fade ناحية الشمال ===== */
+.login-page__hero {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 60%;
+  background-size: cover;
+  background-position: right center;
+  background-repeat: no-repeat;
+}
+
+.login-page__hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--login-bg) 0%, rgba(251, 249, 245, 0) 35%);
+}
+
+/* ===== الجزء الشمال (الفورم) ===== */
+.login-page__panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 47%;
+  padding: 32px 24px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 628px;
+}
+
+.login-form__logo {
+  align-self: center;
+  width: 150px;
+  margin-bottom: 56px;
+}
+
+.login-form__header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.login-form__header h1 {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--login-navy);
+}
+
+.login-form__header p {
+  margin-top: 8px;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--login-muted);
+}
+
+.login-form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ===== Remember me + Forget password ===== */
+.login-form__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 28px 4px 34px;
+  font-size: 20px;
+  color: var(--login-navy);
+}
+
+.login-form__remember {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.login-form__remember input {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--login-gold);
+  cursor: pointer;
+}
+
+.login-form__link {
+  color: var(--login-gold);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-form__link:hover {
+  color: var(--login-gold-dark);
+}
+
+/* ===== الأزرار ===== */
+.login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 72px;
+  border-radius: 999px;
+  font-family: "Poppins", sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.login-btn:active {
+  transform: translateY(1px);
+}
+
+.login-btn--gold {
+  border: none;
+  background: var(--login-gold);
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(174, 145, 64, 0.3);
+}
+
+.login-btn--gold:hover {
+  background: var(--login-gold-dark);
+}
+
+.login-btn--outline {
+  border: 1.5px solid var(--login-border);
+  background: var(--login-field-bg);
+  color: var(--login-navy);
+  font-size: 20px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.login-btn--outline:hover {
+  background: #efeded;
+}
+
+/* ===== خط "or" ===== */
+.login-form__divider {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 28px 0;
+  font-size: 24px;
+  color: var(--login-navy);
+}
+
+.login-form__divider::before,
+.login-form__divider::after {
+  content: "";
+  flex: 1;
+  height: 1.5px;
+  background: #8a93a3;
+}
+
+.login-form__signup {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 20px;
+  color: var(--login-navy);
+}
+
+/* ===== شاشات أصغر ===== */
+@media (max-width: 1280px) {
+  .login-form__logo { width: 120px; margin-bottom: 36px; }
+  .login-form__header { margin-bottom: 36px; }
+  .login-form__header h1 { font-size: 26px; }
+  .login-form__header p { font-size: 18px; }
+  .login-form__row,
+  .login-form__signup { font-size: 17px; }
+  .login-btn { height: 60px; font-size: 19px; }
+}
+
+@media (max-width: 900px) {
+  .login-page__panel {
+    width: 100%;
+    background: rgba(251, 249, 245, 0.92);
+  }
+  .login-page__hero { width: 100%; }
+}

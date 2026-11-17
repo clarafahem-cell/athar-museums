@@ -1,13 +1,7 @@
-import Navbar from "./components/Navbar";
-import MuseumsPage from "./pages/MuseumsPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
-  return (
-    <div>
-      <Navbar />
-      <MuseumsPage />
-    </div>
-  );
+  return <LoginPage />;
 }
 
 export default App;

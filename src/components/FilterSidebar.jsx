@@ -1,11 +1,5 @@
 import "../styles/FilterSidebar.css";
 
-const typeOptions = [
-  "National Museum",
-  "Specialized Museum",
-  "Archeological Site",
-  "Art Museum",
-];
 
 function FilterSidebar({
   search,
@@ -36,32 +30,11 @@ function FilterSidebar({
         <option>All Locations</option>
         <option>Cairo</option>
         <option>Giza</option>
-        <option>Alexandria</option>
         <option>Aswan</option>
-        <option>Faiyum</option>
+        <option>Luxor</option>
       </select>
 
-      <h4 className="filter__heading">Museum Type</h4>
-      {typeOptions.map((type) => (
-        <label className="filter__check" key={type}>
-          <input
-            type="checkbox"
-            checked={types.includes(type)}
-            onChange={() => toggleType(type)}
-          />
-          {type}
-        </label>
-      ))}
-
-      <h4 className="filter__heading">Sort By</h4>
-      <select
-        className="filter__select"
-        value={sortBy}
-        onChange={(e) => setSortBy(e.target.value)}
-      >
-        <option>Most Popular</option>
-        <option>Name (A-Z)</option>
-      </select>
+    
     </aside>
   );
 }
