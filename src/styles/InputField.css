@@ -1,24 +1,26 @@
 .input-field {
   display: flex;
   align-items: center;
-  gap: 14px;
-  height: 64px;
-  padding: 0 22px;
+  gap: calc(var(--u, 1px) * 15);
+  height: calc(var(--u, 1px) * 70);
+  padding: 0 calc(var(--u, 1px) * 22);
   background: var(--login-field-bg);
-  border: 1.5px solid var(--login-border);
-  border-radius: 14px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border: calc(var(--u, 1px) * 1.5) solid var(--login-border);
+  border-radius: calc(var(--u, 1px) * 15);
+  box-shadow: 0 calc(var(--u, 1px) * 3) calc(var(--u, 1px) * 6) rgba(0, 0, 0, 0.08);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .input-field:focus-within {
   border-color: var(--login-gold);
-  box-shadow: 0 0 0 3px rgba(174, 145, 64, 0.18);
+  box-shadow: 0 0 0 3px rgba(172, 143, 64, 0.18);
 }
 
 .input-field__icon {
-  color: var(--login-navy);
+  width: calc(var(--u, 1px) * 27);
+  height: calc(var(--u, 1px) * 27);
   flex-shrink: 0;
+  color: var(--login-navy);
 }
 
 .input-field__input {
@@ -28,7 +30,7 @@
   outline: none;
   background: transparent;
   font-family: "Poppins", sans-serif;
-  font-size: 20px;
+  font-size: calc(var(--u, 1px) * 24);
   color: var(--login-navy);
 }
 
@@ -42,4 +44,9 @@
   background: none;
   color: var(--login-navy);
   cursor: pointer;
+}
+
+.input-field__toggle svg {
+  width: calc(var(--u, 1px) * 24);
+  height: calc(var(--u, 1px) * 24);
 }

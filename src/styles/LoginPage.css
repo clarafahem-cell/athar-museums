@@ -1,4 +1,7 @@
 .login-page {
+  /* 1 وحدة = 1px على شاشة 1920×1080، وبتصغر مع الشاشة */
+  --u: max(0.55px, min(calc(100vw / 1920), calc(100vh / 1080)));
+
   position: relative;
   display: flex;
   min-height: 100vh;
@@ -7,13 +10,10 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* ===== الصورة على اليمين مع fade ناحية الشمال ===== */
+/* الصورة بملء الصفحة + fade من الشمال */
 .login-page__hero {
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 60%;
+  inset: 0;
   background-size: cover;
   background-position: right center;
   background-repeat: no-repeat;
@@ -23,77 +23,90 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, var(--login-bg) 0%, rgba(251, 249, 245, 0) 35%);
+  background: linear-gradient(
+    90deg,
+    var(--login-bg) 0%,
+    var(--login-bg) 36%,
+    rgba(251, 249, 245, 0.55) 46%,
+    rgba(251, 249, 245, 0) 58%
+  );
 }
 
-/* ===== الجزء الشمال (الفورم) ===== */
+/* الجزء الشمال */
 .login-page__panel {
   position: relative;
   z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 47%;
-  padding: 32px 24px;
+  width: calc(var(--u) * 936);
+  padding: calc(var(--u) * 24) 0;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 628px;
+  width: calc(var(--u) * 602);
+  max-width: 100%;
 }
 
 .login-form__logo {
+  display: block;
   align-self: center;
-  width: 150px;
-  margin-bottom: 56px;
+  width: calc(var(--u) * 133);
+  height: auto;
+  margin-bottom: calc(var(--u) * 71);
 }
 
 .login-form__header {
   text-align: center;
-  margin-bottom: 56px;
+  margin-bottom: calc(var(--u) * 73);
 }
 
 .login-form__header h1 {
-  font-size: 32px;
-  font-weight: 600;
+  margin: 0;
+  font-size: calc(var(--u) * 28);
+  line-height: calc(var(--u) * 36);
+  font-weight: 700;
   color: var(--login-navy);
 }
 
 .login-form__header p {
-  margin-top: 8px;
-  font-size: 22px;
-  font-weight: 500;
+  margin: calc(var(--u) * 5) 0 0;
+  font-size: calc(var(--u) * 21);
+  line-height: calc(var(--u) * 30);
+  font-weight: 600;
   color: var(--login-muted);
 }
 
 .login-form__fields {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: calc(var(--u) * 22);
 }
 
-/* ===== Remember me + Forget password ===== */
+/* Remember me + Forget password */
 .login-form__row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 28px 4px 34px;
-  font-size: 20px;
+  margin: calc(var(--u) * 30) calc(var(--u) * -4) calc(var(--u) * 34);
+  font-size: calc(var(--u) * 21);
+  line-height: calc(var(--u) * 32);
   color: var(--login-navy);
 }
 
 .login-form__remember {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: calc(var(--u) * 10);
   cursor: pointer;
 }
 
 .login-form__remember input {
-  width: 22px;
-  height: 22px;
+  width: calc(var(--u) * 21);
+  height: calc(var(--u) * 21);
+  margin: 0;
   accent-color: var(--login-gold);
   cursor: pointer;
 }
@@ -108,16 +121,17 @@
   color: var(--login-gold-dark);
 }
 
-/* ===== الأزرار ===== */
+/* الأزرار */
 .login-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  height: 72px;
+  gap: calc(var(--u) * 12);
+  width: 100%;
+  height: calc(var(--u) * 70);
   border-radius: 999px;
   font-family: "Poppins", sans-serif;
-  font-size: 22px;
+  font-size: calc(var(--u) * 24);
   font-weight: 500;
   cursor: pointer;
   transition: background 0.2s, transform 0.1s;
@@ -131,7 +145,7 @@
   border: none;
   background: var(--login-gold);
   color: #fff;
-  box-shadow: 0 6px 14px rgba(174, 145, 64, 0.3);
+  box-shadow: 0 calc(var(--u) * 5) calc(var(--u) * 10) rgba(120, 95, 30, 0.25);
 }
 
 .login-btn--gold:hover {
@@ -139,25 +153,35 @@
 }
 
 .login-btn--outline {
-  border: 1.5px solid var(--login-border);
+  height: calc(var(--u) * 80);
+  border: calc(var(--u) * 1.5) solid var(--login-border);
   background: var(--login-field-bg);
   color: var(--login-navy);
-  font-size: 20px;
+  font-size: calc(var(--u) * 20);
   font-weight: 600;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 calc(var(--u) * 3) calc(var(--u) * 6) rgba(0, 0, 0, 0.08);
 }
 
 .login-btn--outline:hover {
   background: #efeded;
 }
 
-/* ===== خط "or" ===== */
+.login-btn--outline svg {
+  width: calc(var(--u) * 22);
+  height: calc(var(--u) * 22);
+}
+
+/* خط or */
 .login-form__divider {
   display: flex;
   align-items: center;
-  gap: 18px;
-  margin: 28px 0;
-  font-size: 24px;
+  align-self: center;
+  gap: calc(var(--u) * 16);
+  width: calc(var(--u) * 435);
+  max-width: 100%;
+  margin: calc(var(--u) * 33) 0 calc(var(--u) * 30);
+  font-size: calc(var(--u) * 26);
+  line-height: calc(var(--u) * 36);
   color: var(--login-navy);
 }
 
@@ -165,32 +189,147 @@
 .login-form__divider::after {
   content: "";
   flex: 1;
-  height: 1.5px;
+  height: calc(var(--u) * 1.5);
   background: #8a93a3;
 }
 
 .login-form__signup {
-  margin-top: 30px;
+  margin: calc(var(--u) * 29) 0 0;
   text-align: center;
-  font-size: 20px;
+  font-size: calc(var(--u) * 21);
+  line-height: calc(var(--u) * 30);
   color: var(--login-navy);
 }
 
-/* ===== شاشات أصغر ===== */
-@media (max-width: 1280px) {
-  .login-form__logo { width: 120px; margin-bottom: 36px; }
-  .login-form__header { margin-bottom: 36px; }
-  .login-form__header h1 { font-size: 26px; }
-  .login-form__header p { font-size: 18px; }
-  .login-form__row,
-  .login-form__signup { font-size: 17px; }
-  .login-btn { height: 60px; font-size: 19px; }
+.login-error {
+  margin-top: calc(var(--u) * 14);
+  font-size: calc(var(--u) * 18);
+  color: #c0392b;
 }
 
+/* موبايل وتابلت */
 @media (max-width: 900px) {
+  .login-page {
+    --u: 0.6px;
+    min-height: 100dvh;
+  }
+
+  .login-page__hero {
+    background-position: 78% center;
+  }
+
+  .login-page__hero::before {
+    background: rgba(251, 249, 245, 0.82);
+  }
+
   .login-page__panel {
     width: 100%;
-    background: rgba(251, 249, 245, 0.92);
+    align-items: center;
+    justify-content: center;
+    padding: 20px 18px 28px;
   }
-  .login-page__hero { width: 100%; }
+
+  .login-form {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .login-form__logo {
+    width: 110px;
+    margin-bottom: 18px;
+  }
+
+  .login-form__header {
+    margin-bottom: 26px;
+  }
+
+  .login-form__header h1 {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .login-form__header p {
+    margin-top: 6px;
+    font-size: 14px;
+    line-height: 21px;
+  }
+
+  .login-form__fields {
+    gap: 20px;
+  }
+
+  /* الحقول (16px عشان الآيفون ميعملش zoom) */
+  .login-form .input-field {
+    height: 46px;
+    gap: 12px;
+    padding: 0 16px;
+    border-width: 1px;
+    border-radius: 12px;
+  }
+
+  .login-form .input-field__input {
+    font-size: 16px;
+  }
+
+  .login-form .input-field__icon,
+  .login-form .input-field__toggle svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .login-form__row {
+    margin: 18px 0 20px;
+    font-size: 14px;
+    line-height: 24px;
+  }
+
+  .login-form__remember {
+    gap: 8px;
+  }
+
+  .login-form__remember input {
+    width: 18px;
+    height: 18px;
+  }
+
+  .login-btn {
+    height: 46px;
+    gap: 10px;
+    font-size: 17px;
+  }
+
+  .login-btn--outline {
+    height: 52px;
+    border-width: 1px;
+    font-size: 15px;
+  }
+
+  .login-btn--outline svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .login-form__divider {
+    width: 82%;
+    gap: 12px;
+    margin: 22px 0 20px;
+    font-size: 18px;
+    line-height: 26px;
+  }
+
+  .login-form__divider::before,
+  .login-form__divider::after {
+    height: 1px;
+  }
+
+  .login-form__signup {
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .login-error {
+    margin-top: 12px;
+    font-size: 14px;
+  }
 }

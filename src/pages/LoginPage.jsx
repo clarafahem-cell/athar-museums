@@ -2,9 +2,12 @@ import { useState } from "react";
 import { Mail, LockKeyhole } from "lucide-react";
 import InputField from "../components/InputField";
 import GoogleIcon from "../components/GoogleIcon";
+import { userExists } from "../data/users";
 import logo from "../assets/images/login/logo.png";
 import hero from "../assets/images/login/hero.png";
 import "../styles/LoginPage.css";
+
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function LoginPage() {
   const [form, setForm] = useState({
@@ -12,6 +15,8 @@ export default function LoginPage() {
     password: "",
     remember: false,
   });
+  const [error, setError] = useState("");
+  const [notFound, setNotFound] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -19,18 +24,31 @@ export default function LoginPage() {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
+    setError("");
+    setNotFound(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // هنا هتربط بالـ API بتاعك بعدين
-    console.log("Login data:", form);
+
+    if (!emailPattern.test(form.email.trim())) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
+    if (!userExists(form.email)) {
+      setError("No account found with this email.");
+      setNotFound(true);
+      return;
+    }
+
+    window.location.assign(`${import.meta.env.BASE_URL}?page=museums`);
   };
 
   return (
     <main className="login-page">
       <section className="login-page__panel">
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form className="login-form" onSubmit={handleSubmit} noValidate>
           <img className="login-form__logo" src={logo} alt="Athar" />
 
           <header className="login-form__header">
@@ -56,6 +74,20 @@ export default function LoginPage() {
               onChange={handleChange}
             />
           </div>
+
+          {error && (
+            <p className="login-error">
+              {error}{" "}
+              {notFound && (
+                <a
+                  href={`${import.meta.env.BASE_URL}?page=signup`}
+                  className="login-form__link"
+                >
+                  Create one
+                </a>
+              )}
+            </p>
+          )}
 
           <div className="login-form__row">
             <label className="login-form__remember">
@@ -87,7 +119,10 @@ export default function LoginPage() {
 
           <p className="login-form__signup">
             Don’t have an account?{" "}
-            <a href="#" className="login-form__link">
+            <a
+              href={`${import.meta.env.BASE_URL}?page=signup`}
+              className="login-form__link"
+            >
               Create one
             </a>
           </p>

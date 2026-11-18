@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import "../styles/InputField.css";
@@ -24,6 +25,7 @@ export default function InputField({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        required
       />
 
       {isPassword && (

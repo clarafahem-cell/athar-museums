@@ -1,0 +1,128 @@
+/* الساين أب بياخد تنسيق اللوج إن، وده بس الفروق */
+
+.signup-page .login-page__panel {
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: calc(var(--u) * 720);
+  padding: calc(var(--u) * 48) 0 calc(var(--u) * 24) calc(var(--u) * 58);
+}
+
+.signup-page .login-form__logo {
+  align-self: flex-start;
+  margin-left: calc(var(--u) * 35); /* لو اللوجو مش على نفس خط الفورم عدّل الرقم ده */
+  margin-bottom: calc(var(--u) * 43);
+}
+
+.signup-page .login-form__header {
+  text-align: left;
+  margin-bottom: calc(var(--u) * 35);
+}
+
+.signup-page .login-form__header p {
+  max-width: calc(var(--u) * 480);
+  margin-top: calc(var(--u) * 13);
+  font-size: calc(var(--u) * 20);
+}
+
+.signup-page .login-form__fields {
+  gap: calc(var(--u) * 28);
+}
+
+.signup-submit {
+  margin-top: calc(var(--u) * 28);
+}
+
+.signup-page .login-form__divider {
+  margin: calc(var(--u) * 32) 0 calc(var(--u) * 30);
+}
+
+.signup-page .login-form__signup {
+  margin-top: calc(var(--u) * 28);
+}
+
+.signup-error {
+  margin-top: calc(var(--u) * 14);
+  font-size: calc(var(--u) * 18);
+  color: #c0392b;
+}
+
+/* قايمة شروط الباسورد */
+.password-rules {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: calc(var(--u) * 8) calc(var(--u) * 16);
+  margin: calc(var(--u) * 16) 0 0;
+  padding: 0;
+  font-size: calc(var(--u) * 16);
+  color: var(--login-muted);
+}
+
+.password-rules li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s;
+}
+
+.password-rules li.is-valid {
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+/* موبايل وتابلت */
+@media (max-width: 900px) {
+  .signup-page .login-page__panel {
+    width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px 18px 28px;
+  }
+
+  .signup-page .login-form__logo {
+    align-self: center;
+    margin-left: 0;
+    margin-bottom: 18px;
+  }
+
+  .signup-page .login-form__header {
+    text-align: left;
+    margin-bottom: 26px;
+  }
+
+  .signup-page .login-form__header p {
+    max-width: none;
+    margin-top: 6px;
+    font-size: 14px;
+  }
+
+  .signup-page .login-form__fields {
+    gap: 20px;
+  }
+
+  .signup-submit {
+    margin-top: 22px;
+  }
+
+  .signup-page .login-form__divider {
+    margin: 22px 0 20px;
+    font-size: 18px;
+  }
+
+  .signup-page .login-form__signup {
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  .signup-error {
+    margin-top: 12px;
+    font-size: 14px;
+  }
+
+  .password-rules {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-top: 12px;
+    font-size: 13px;
+  }
+}

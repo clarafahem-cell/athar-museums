@@ -1,11 +1,11 @@
 :root {
   --login-bg: #fbf9f5;
-  --login-gold: #ae9140;
-  --login-gold-dark: #967b2f;
-  --login-navy: #1b365d;
-  --login-muted: #6b7280;
-  --login-field-bg: #f7f6f6;
-  --login-border: #d9d9de;
+  --login-gold: #ac8f40;
+  --login-gold-dark: #94792f;
+  --login-navy: #0a2540;
+  --login-muted: #5f6b81;
+  --login-field-bg: #f7f5f3;
+  --login-border: #cbcacf;
 }
 :root {
   /* الألوان (مأخوذة من التصميم) */
