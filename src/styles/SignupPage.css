@@ -69,31 +69,31 @@
   color: #2e7d32;
   font-weight: 500;
 }
-
 /* موبايل وتابلت */
 @media (max-width: 900px) {
   .signup-page .login-page__panel {
     width: 100%;
     align-items: flex-start;
     justify-content: center;
-    padding: 20px 18px 28px;
+    padding: 26px 18px 32px;
   }
 
   .signup-page .login-form__logo {
     align-self: center;
     margin-left: 0;
-    margin-bottom: 18px;
+    margin-bottom: 8px;
   }
 
   .signup-page .login-form__header {
     text-align: left;
-    margin-bottom: 26px;
+    margin-bottom: 23px;
   }
 
   .signup-page .login-form__header p {
-    max-width: none;
-    margin-top: 6px;
+    max-width: 335px;
+    margin-top: 7px;
     font-size: 14px;
+    line-height: 20px;
   }
 
   .signup-page .login-form__fields {
@@ -101,22 +101,22 @@
   }
 
   .signup-submit {
-    margin-top: 22px;
+    margin-top: 19px;
   }
 
   .signup-page .login-form__divider {
-    margin: 22px 0 20px;
+    margin: 18px 0 20px;
     font-size: 18px;
   }
 
   .signup-page .login-form__signup {
-    margin-top: 20px;
+    margin-top: 17px;
     font-size: 14px;
   }
 
   .signup-error {
-    margin-top: 12px;
-    font-size: 14px;
+    margin-top: 10px;
+    font-size: 13px;
   }
 
   .password-rules {

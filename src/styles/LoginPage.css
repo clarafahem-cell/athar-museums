@@ -206,7 +206,6 @@
   font-size: calc(var(--u) * 18);
   color: #c0392b;
 }
-
 /* موبايل وتابلت */
 @media (max-width: 900px) {
   .login-page {
@@ -215,7 +214,7 @@
   }
 
   .login-page__hero {
-    background-position: 78% center;
+    background-position: 76% center;
   }
 
   .login-page__hero::before {
@@ -224,9 +223,9 @@
 
   .login-page__panel {
     width: 100%;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    padding: 20px 18px 28px;
+    padding: 26px 18px 32px;
   }
 
   .login-form {
@@ -235,33 +234,33 @@
   }
 
   .login-form__logo {
-    width: 110px;
-    margin-bottom: 18px;
-  }
-
-  .login-form__header {
+    width: 150px;
     margin-bottom: 26px;
   }
 
+  .login-form__header {
+    margin-bottom: 47px;
+  }
+
   .login-form__header h1 {
-    font-size: 20px;
+    font-size: 19px;
     line-height: 28px;
   }
 
   .login-form__header p {
-    margin-top: 6px;
+    margin-top: 3px;
     font-size: 14px;
     line-height: 21px;
   }
 
   .login-form__fields {
-    gap: 20px;
+    gap: 16px;
   }
 
   /* الحقول (16px عشان الآيفون ميعملش zoom) */
   .login-form .input-field {
     height: 46px;
-    gap: 12px;
+    gap: 10px;
     padding: 0 16px;
     border-width: 1px;
     border-radius: 12px;
@@ -278,30 +277,30 @@
   }
 
   .login-form__row {
-    margin: 18px 0 20px;
+    margin: 20px 0 22px;
     font-size: 14px;
     line-height: 24px;
   }
 
   .login-form__remember {
-    gap: 8px;
+    gap: 6px;
   }
 
   .login-form__remember input {
-    width: 18px;
-    height: 18px;
+    width: 15px;
+    height: 15px;
   }
 
   .login-btn {
-    height: 46px;
+    height: 47px;
     gap: 10px;
-    font-size: 17px;
+    font-size: 16px;
   }
 
   .login-btn--outline {
     height: 52px;
     border-width: 1px;
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .login-btn--outline svg {
@@ -312,7 +311,7 @@
   .login-form__divider {
     width: 82%;
     gap: 12px;
-    margin: 22px 0 20px;
+    margin: 20px 0 21px;
     font-size: 18px;
     line-height: 26px;
   }
@@ -323,13 +322,13 @@
   }
 
   .login-form__signup {
-    margin-top: 20px;
+    margin-top: 19px;
     font-size: 14px;
     line-height: 22px;
   }
 
   .login-error {
-    margin-top: 12px;
-    font-size: 14px;
+    margin-top: 10px;
+    font-size: 13px;
   }
 }
