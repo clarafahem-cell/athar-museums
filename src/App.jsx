@@ -1,5 +1,6 @@
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import BookingPage from "./pages/BookingPage";
 import Navbar from "./components/Navbar";
 import MuseumsPage from "./pages/MuseumsPage";
 
@@ -18,6 +19,10 @@ function App() {
 
   if (page === "signup") {
     return <SignupPage />;
+  }
+
+  if (page === "booking") {
+    return <BookingPage />;
   }
 
   return <LoginPage />;

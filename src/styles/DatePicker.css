@@ -1,0 +1,139 @@
+/* --bk = 1px على فريم الفيجما (1600px)، وبتتعرّف في صفحة الحجز في الخطوة 6 */
+
+.date-picker {
+  position: relative;
+}
+
+.date-picker__field {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--bk, 1px) * 12);
+  width: 100%;
+  height: calc(var(--bk, 1px) * 59);
+  padding: 0 calc(var(--bk, 1px) * 20);
+  background: #fcf5ea;
+  border: calc(var(--bk, 1px) * 1.5) solid #f0dcc0;
+  border-radius: 999px;
+  font-family: "Poppins", sans-serif;
+  font-size: calc(var(--bk, 1px) * 21);
+  font-weight: 600;
+  color: #b3a78f;
+  text-align: left;
+  cursor: pointer;
+}
+
+.date-picker__field.has-value {
+  color: #1d3557;
+}
+
+.date-picker__text {
+  flex: 1;
+}
+
+.date-picker__icon,
+.date-picker__chevron {
+  width: calc(var(--bk, 1px) * 24);
+  height: calc(var(--bk, 1px) * 24);
+  flex-shrink: 0;
+  color: #b3963f;
+}
+
+.date-picker__chevron {
+  color: #1d3557;
+  transition: transform 0.2s;
+}
+
+.date-picker__chevron.is-open {
+  transform: rotate(180deg);
+}
+
+/* التقويم */
+.date-picker__popup {
+   position: static;
+  margin-top: calc(var(--bk, 1px) * 6);
+  z-index: 30;
+  width: calc(var(--bk, 1px) * 434);
+  max-width: 100%;
+  padding: calc(var(--bk, 1px) * 16) calc(var(--bk, 1px) * 22) calc(var(--bk, 1px) * 18);
+  background: #fff;
+  border-radius: calc(var(--bk, 1px) * 20);
+  box-shadow: 0 calc(var(--bk, 1px) * 8) calc(var(--bk, 1px) * 24) rgba(0, 0, 0, 0.14);
+}
+
+.date-picker__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: calc(var(--bk, 1px) * 18);
+}
+
+.date-picker__title {
+  font-size: calc(var(--bk, 1px) * 20);
+  font-weight: 700;
+  color: #1d3557;
+}
+
+.date-picker__nav {
+  display: flex;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #1d3557;
+  cursor: pointer;
+}
+
+.date-picker__nav svg {
+  width: calc(var(--bk, 1px) * 22);
+  height: calc(var(--bk, 1px) * 22);
+}
+
+.date-picker__nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.date-picker__weekdays,
+.date-picker__days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  justify-items: center;
+}
+
+.date-picker__weekdays {
+  margin-bottom: calc(var(--bk, 1px) * 14);
+  font-size: calc(var(--bk, 1px) * 16);
+  font-weight: 600;
+  color: #1d3557;
+}
+
+.date-picker__days {
+  row-gap: calc(var(--bk, 1px) * 6);
+}
+
+.date-picker__day {
+  width: calc(var(--bk, 1px) * 38);
+  height: calc(var(--bk, 1px) * 38);
+  background: none;
+  border: none;
+  border-radius: 50%;
+  font-family: "Poppins", sans-serif;
+  font-size: calc(var(--bk, 1px) * 17);
+  font-weight: 500;
+  color: #1d3557;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.date-picker__day:hover:not(:disabled):not(.is-selected) {
+  background: rgba(179, 150, 63, 0.16);
+}
+
+.date-picker__day.is-selected {
+  background: #b3963f;
+  color: #fff;
+}
+
+.date-picker__day:disabled {
+  color: #cfc9bb;
+  cursor: not-allowed;
+}
