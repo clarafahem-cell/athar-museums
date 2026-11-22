@@ -95,9 +95,7 @@
 .museums-page__body .museum-list {
   width: 100%;
 }
-/* لاير كريمي فوق الصورة على الموبايل (زي صفحة اللوج إن) */
-@media (max-width: 900px) {
+
   .museums-page__bg img {
     opacity: 0.45;
   }
-}
