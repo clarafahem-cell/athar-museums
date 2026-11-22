@@ -18,11 +18,11 @@
 }
 
 .navbar__logo img {
-  height: 55px;
+  height: 63px;
   width: auto;
   display: block;
-  margin-top: 5px;
-  margin-left: -8px;
+  margin-top: 10px;
+  margin-left: -10px;
 }
 
 /* Hamburger menu */
@@ -269,7 +269,7 @@
 /* Mobile */
 @media (max-width: 768px) {
   .navbar {
-    height: 64px;
+    height: 63px;
     padding: 0 10px;
     gap: 10px;
   }
