@@ -151,9 +151,3 @@
     margin-top: 0;
   }
 }
-@media (min-width: 769px) {
-  .date-picker__popup.is-hidden {
-    visibility: hidden;
-    pointer-events: none;
-  }
-}

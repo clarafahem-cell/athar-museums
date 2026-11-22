@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Mail, LockKeyhole } from "lucide-react";
 import InputField from "../components/InputField";
@@ -15,15 +16,18 @@ export default function LoginPage() {
     password: "",
     remember: false,
   });
+
   const [error, setError] = useState("");
   const [notFound, setNotFound] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
     setForm((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
+
     setError("");
     setNotFound(false);
   };
@@ -42,14 +46,24 @@ export default function LoginPage() {
       return;
     }
 
-    window.location.assign(`${import.meta.env.BASE_URL}?page=museums`);
+    window.location.assign(
+      `${import.meta.env.BASE_URL}?page=museums`
+    );
   };
 
   return (
     <main className="login-page">
       <section className="login-page__panel">
-        <form className="login-form" onSubmit={handleSubmit} noValidate>
-          <img className="login-form__logo" src={logo} alt="Athar" />
+        <form
+          className="login-form"
+          onSubmit={handleSubmit}
+          noValidate
+        >
+          <img
+            className="login-form__logo"
+            src={logo}
+            alt="Athar"
+          />
 
           <header className="login-form__header">
             <h1>Museum Management System</h1>
@@ -65,6 +79,7 @@ export default function LoginPage() {
               value={form.email}
               onChange={handleChange}
             />
+
             <InputField
               icon={LockKeyhole}
               type="password"
@@ -99,12 +114,16 @@ export default function LoginPage() {
               />
               Remember me
             </label>
+
             <a href="#" className="login-form__link">
               Forget password?
             </a>
           </div>
 
-          <button type="submit" className="login-btn login-btn--gold">
+          <button
+            type="submit"
+            className="login-btn login-btn--gold"
+          >
             Login
           </button>
 
@@ -112,7 +131,10 @@ export default function LoginPage() {
             <span>or</span>
           </div>
 
-          <button type="button" className="login-btn login-btn--outline">
+          <button
+            type="button"
+            className="login-btn login-btn--outline"
+          >
             <GoogleIcon />
             Login with Google
           </button>

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { User, Mail, LockKeyhole, Check, Circle } from "lucide-react";
 import InputField from "../components/InputField";
@@ -35,12 +34,12 @@ export default function SignupPage() {
     setError("");
   };
 
+  const allRulesPassed = passwordRules.every((rule) =>
+    rule.test(form.password)
+  );
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const allRulesPassed = passwordRules.every((rule) =>
-      rule.test(form.password)
-    );
 
     if (!allRulesPassed) {
       setError("Password does not meet all the requirements");
@@ -93,29 +92,31 @@ export default function SignupPage() {
               onChange={handleChange}
             />
 
-            <InputField
-              icon={LockKeyhole}
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={handleChange}
-            />
+            <div className="password-wrap">
+              <InputField
+                icon={LockKeyhole}
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={form.password}
+                onChange={handleChange}
+              />
 
-            {form.password.length > 0 && (
-              <ul className="password-rules">
-                {passwordRules.map((rule) => {
-                  const passed = rule.test(form.password);
+              {form.password.length > 0 && !allRulesPassed && (
+                <ul className="password-rules">
+                  {passwordRules.map((rule) => {
+                    const passed = rule.test(form.password);
 
-                  return (
-                    <li key={rule.id} className={passed ? "is-valid" : ""}>
-                      {passed ? <Check size={16} /> : <Circle size={16} />}
-                      {rule.label}
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
+                    return (
+                      <li key={rule.id} className={passed ? "is-valid" : ""}>
+                        {passed ? <Check size={14} /> : <Circle size={14} />}
+                        {rule.label}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
 
             <InputField
               icon={LockKeyhole}

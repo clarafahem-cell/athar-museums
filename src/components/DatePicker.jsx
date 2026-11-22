@@ -1,5 +1,5 @@
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   CalendarDays,
   ChevronDown,
@@ -28,7 +28,6 @@ const sameDay = (a, b) =>
 export default function DatePicker({ value, onChange }) {
   const today = startOfDay(new Date());
 
-  const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(
     () => window.matchMedia("(max-width: 768px)").matches
   );
@@ -40,8 +39,6 @@ export default function DatePicker({ value, onChange }) {
       1
     )
   );
-
-  const wrapRef = useRef(null);
 
   // تحديد حجم الشاشة
   useEffect(() => {
@@ -57,25 +54,6 @@ export default function DatePicker({ value, onChange }) {
       media.removeEventListener("change", handleResize);
     };
   }, []);
-
-  // قفل التقويم عند الضغط خارجه على الكمبيوتر
-  useEffect(() => {
-    const onDown = (e) => {
-      if (
-        !isMobile &&
-        wrapRef.current &&
-        !wrapRef.current.contains(e.target)
-      ) {
-        setOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", onDown);
-
-    return () => {
-      document.removeEventListener("mousedown", onDown);
-    };
-  }, [isMobile]);
 
   const year = view.getFullYear();
   const month = view.getMonth();
@@ -99,20 +77,19 @@ export default function DatePicker({ value, onChange }) {
     setView(new Date(year, month + step, 1));
   };
 
+  // اختيار التاريخ بدون قفل التقويم
   const pick = (date) => {
     onChange(date);
-    setOpen(false);
   };
 
   return (
-    <div className="date-picker" ref={wrapRef}>
+    <div className="date-picker">
 
       {!isMobile && (
         <button
           type="button"
           className={`date-picker__field ${value ? "has-value" : ""}`}
-          aria-expanded={open}
-          onClick={() => setOpen((o) => !o)}
+          aria-expanded="true"
         >
           <CalendarDays
             className="date-picker__icon"
@@ -124,17 +101,15 @@ export default function DatePicker({ value, onChange }) {
           </span>
 
           <ChevronDown
-            className={`date-picker__chevron ${open ? "is-open" : ""}`}
+            className="date-picker__chevron is-open"
             strokeWidth={2}
           />
         </button>
       )}
 
       <div
-        className={`date-picker__popup ${
-          !isMobile && !open ? "is-hidden" : ""
-        }`}
-        aria-hidden={!isMobile && !open}
+        className="date-picker__popup"
+        aria-hidden="false"
       >
         <div className="date-picker__header">
           <button

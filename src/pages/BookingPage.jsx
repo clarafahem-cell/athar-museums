@@ -21,7 +21,7 @@ export default function BookingPage() {
   const [language, setLanguage] = useState("");
   const [nationality, setNationality] = useState("egyptian");
 
-  // كل جنسية لها عدادات مستقلة
+  // عدادات مستقلة لكل جنسية
   const [countsByNationality, setCountsByNationality] = useState({
     egyptian: { ...EMPTY_COUNTS },
     other: { ...EMPTY_COUNTS },
@@ -29,53 +29,34 @@ export default function BookingPage() {
 
   const type = TICKET_TYPES.find((t) => t.id === typeId);
 
-  // العدادات الخاصة بالجنسية المختارة حاليًا
+  // عدادات الجنسية المختارة فقط
   const counts = countsByNationality[nationality];
 
-  const egyptianCounts = countsByNationality.egyptian;
-  const otherCounts = countsByNationality.other;
-
-  // عدد التذاكر لكل جنسية
-  const getTicketCount = (nationalityCounts) =>
-    VISITOR_TYPES.reduce(
-      (sum, v) => sum + nationalityCounts[v.id],
-      0
-    );
-
-  const egyptianTicketCount = getTicketCount(egyptianCounts);
-  const otherTicketCount = getTicketCount(otherCounts);
-
-  const totalTickets = egyptianTicketCount + otherTicketCount;
+  // حساب عدد التذاكر للجنسية المختارة
+  const totalTickets = VISITOR_TYPES.reduce(
+    (sum, v) => sum + counts[v.id],
+    0
+  );
 
   // حساب إجمالي المصريين بالجنيه
   const totalEgyptian = VISITOR_TYPES.reduce(
-    (sum, v) => sum + egyptianCounts[v.id] * PRICES.egyptian[v.id],
+    (sum, v) =>
+      sum + countsByNationality.egyptian[v.id] * PRICES.egyptian[v.id],
     0
   );
 
   // حساب إجمالي الأجانب بالدولار
   const totalOther = VISITOR_TYPES.reduce(
-    (sum, v) => sum + otherCounts[v.id] * PRICES.other[v.id],
+    (sum, v) =>
+      sum + countsByNationality.other[v.id] * PRICES.other[v.id],
     0
   );
 
-  // عرض أعداد الزوار من الجنسيتين
-  const getVisitorsText = (nationalityCounts, label) => {
-    const selectedVisitors = VISITOR_TYPES
-      .filter((v) => nationalityCounts[v.id] > 0)
-      .map((v) => `${v.label} ${nationalityCounts[v.id]}`);
-
-    return selectedVisitors.length
-      ? `${label}: ${selectedVisitors.join(", ")}`
-      : "";
-  };
-
-  const visitorsText = [
-    getVisitorsText(egyptianCounts, "Egyptian"),
-    getVisitorsText(otherCounts, "Other Nationality"),
-  ]
-    .filter(Boolean)
-    .join(" | ");
+  // عرض زوار الجنسية المختارة فقط
+  const visitorsText = VISITOR_TYPES
+    .filter((v) => counts[v.id] > 0)
+    .map((v) => `${v.label} ${counts[v.id]}`)
+    .join(", ");
 
   const missing = [
     !date && "Date",
@@ -94,6 +75,7 @@ export default function BookingPage() {
     }
   };
 
+  // تعديل عدادات الجنسية المختارة فقط
   const handleCountChange = (id, value) => {
     setCountsByNationality((prev) => ({
       ...prev,
@@ -104,15 +86,29 @@ export default function BookingPage() {
     }));
   };
 
+  // عند الضغط على Continue
   const handleContinue = () => {
-    console.log("Booking:", {
+    const bookingData = {
       type: type.label,
       date,
       time,
+      nationality,
       language: type.needsLanguage ? language : null,
-      countsByNationality,
-      totalEgyptian,
-      totalOther,
+      counts: { ...counts },
+      total:
+        nationality === "egyptian"
+          ? totalEgyptian
+          : totalOther,
+      currency:
+        nationality === "egyptian" ? "EGP" : "USD",
+    };
+
+    console.log("Booking:", bookingData);
+
+    // تصفير عدادات الجنسيتين بعد إتمام Continue
+    setCountsByNationality({
+      egyptian: { ...EMPTY_COUNTS },
+      other: { ...EMPTY_COUNTS },
     });
   };
 
@@ -121,7 +117,9 @@ export default function BookingPage() {
       <div className="booking__inner">
         <header className="booking__header">
           <img className="booking__logo" src={logo} alt="Athar" />
+
           <h1 className="booking__title">Book Your Ticket</h1>
+
           <a className="booking__back" href={`${BASE}?page=museums`}>
             <ArrowLeft strokeWidth={2.2} />
             Back to Home
@@ -132,14 +130,20 @@ export default function BookingPage() {
           <section className="booking__card">
             <h2 className="booking__label">Select Ticket Type</h2>
 
-            <div className="booking__types" role="radiogroup" aria-label="Ticket type">
+            <div
+              className="booking__types"
+              role="radiogroup"
+              aria-label="Ticket type"
+            >
               {TICKET_TYPES.map((t) => (
                 <button
                   key={t.id}
                   type="button"
                   role="radio"
                   aria-checked={typeId === t.id}
-                  className={`booking__type ${typeId === t.id ? "is-selected" : ""}`}
+                  className={`booking__type ${
+                    typeId === t.id ? "is-selected" : ""
+                  }`}
                   onClick={() => handleTypeChange(t.id)}
                 >
                   <span className="booking__radio" />
@@ -151,6 +155,7 @@ export default function BookingPage() {
             <div className="booking__grid">
               <div className="booking__col">
                 <h2 className="booking__label">Select Visit Date</h2>
+
                 <div className="booking__field">
                   <DatePicker value={date} onChange={setDate} />
                 </div>
@@ -165,14 +170,19 @@ export default function BookingPage() {
                 {type.needsLanguage && (
                   <div className="booking__lang">
                     <h2 className="booking__label">Select Language</h2>
+
                     <div className="booking__field">
-                      <LanguageSelect value={language} onChange={setLanguage} />
+                      <LanguageSelect
+                        value={language}
+                        onChange={setLanguage}
+                      />
                     </div>
                   </div>
                 )}
 
                 <div className="booking__ticket">
                   <h2 className="booking__label">Select Ticket</h2>
+
                   <div className="booking__field booking__field--tickets">
                     <TicketSelector
                       nationality={nationality}
@@ -195,6 +205,7 @@ export default function BookingPage() {
             visitorsText={visitorsText}
             totalEgyptian={totalEgyptian}
             totalOther={totalOther}
+            nationality={nationality}
             missing={missing}
             disabled={!canContinue}
             onContinue={handleContinue}

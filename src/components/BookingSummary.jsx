@@ -21,6 +21,7 @@ export default function BookingSummary({
   visitorsText,
   totalEgyptian,
   totalOther,
+  nationality,
   missing = [],
   disabled,
   onContinue,
@@ -51,15 +52,17 @@ export default function BookingSummary({
         ))}
       </ul>
 
-      <div className="summary__total">
-        <span>Egyptian Total</span>
-        <span>EGP {totalEgyptian}</span>
-      </div>
-
-      <div className="summary__total">
-        <span>Other Nationality Total</span>
-        <span>USD {totalOther}</span>
-      </div>
+      {nationality === "egyptian" ? (
+        <div className="summary__total">
+          <span>Egyptian Total</span>
+          <span>EGP {totalEgyptian}</span>
+        </div>
+      ) : (
+        <div className="summary__total">
+          <span>Other Nationality Total</span>
+          <span>USD {totalOther}</span>
+        </div>
+      )}
 
       {missing.length > 0 && (
         <p className="summary__hint">

@@ -1,16 +1,29 @@
-/* الساين أب بياخد تنسيق اللوج إن، وده بس الفروق */
+/* الساين أب بياخد تنسيق اللوج إن، وده بس الفروق (مقاسات الفيجما) */
 
-.signup-page .login-page__panel {
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: calc(var(--u) * 720);
-  padding: calc(var(--u) * 48) 0 calc(var(--u) * 24) calc(var(--u) * 58);
+/* ديسكتوب: الصفحة بتصغر عشان تدخل في الشاشة */
+@media (min-width: 901px) {
+  .login-page.signup-page {
+    --u: max(0.55px, min(calc(100vw / 1920), calc(100vh / 1120)));
+  }
 }
 
+/* الفورم في نص الجزء الشمال (قريب من الصورة) */
+.signup-page .login-page__panel {
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--u) * 936);
+  padding: calc(var(--u) * 16) 0;
+}
+
+.signup-page .login-form {
+  width: calc(var(--u) * 602);
+}
+
+/* اللوجو: رسمته 131 زي الفيجما، وعلى خط الفورم من الشمال */
 .signup-page .login-form__logo {
   align-self: flex-start;
-  margin-left: calc(var(--u) * 35); /* لو اللوجو مش على نفس خط الفورم عدّل الرقم ده */
-  margin-bottom: calc(var(--u) * 43);
+  width: calc(var(--u) * 133);
+  margin: 0 0 calc(var(--u) * 30);
 }
 
 .signup-page .login-form__header {
@@ -22,6 +35,7 @@
   max-width: calc(var(--u) * 480);
   margin-top: calc(var(--u) * 13);
   font-size: calc(var(--u) * 20);
+  line-height: calc(var(--u) * 30);
 }
 
 .signup-page .login-form__fields {
@@ -41,20 +55,28 @@
 }
 
 .signup-error {
-  margin-top: calc(var(--u) * 14);
-  font-size: calc(var(--u) * 18);
+  margin-top: calc(var(--u) * 10);
+  font-size: calc(var(--u) * 17);
   color: #c0392b;
 }
 
-/* قايمة شروط الباسورد */
+/* شروط الباسورد: بتنزل في مكانها وبتزق Confirm Password لتحت */
+.password-wrap {
+  position: static;
+}
+
 .password-rules {
+  position: static;
   list-style: none;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: calc(var(--u) * 8) calc(var(--u) * 16);
-  margin: calc(var(--u) * 16) 0 0;
-  padding: 0;
-  font-size: calc(var(--u) * 16);
+  gap: calc(var(--u) * 4) calc(var(--u) * 16);
+  margin: calc(var(--u) * 8) 0 0;
+  padding: 0 calc(var(--u) * 4);
+  background: none;
+  border: none;
+  box-shadow: none;
+  font-size: calc(var(--u) * 14);
   color: var(--login-muted);
 }
 
@@ -69,6 +91,7 @@
   color: #2e7d32;
   font-weight: 500;
 }
+
 /* موبايل وتابلت */
 @media (max-width: 900px) {
   .signup-page .login-page__panel {
@@ -78,15 +101,23 @@
     padding: 26px 18px 32px;
   }
 
+  .signup-page .login-form {
+    width: 100%;
+  }
+
   .signup-page .login-form__logo {
     align-self: center;
-    margin-left: 0;
-    margin-bottom: 8px;
+    width: 150px;
+    margin: 0 0 8px;
   }
 
   .signup-page .login-form__header {
-    text-align: left;
     margin-bottom: 23px;
+  }
+
+  .signup-page .login-form__header h1 {
+    font-size: 19px;
+    line-height: 28px;
   }
 
   .signup-page .login-form__header p {
@@ -121,8 +152,23 @@
 
   .password-rules {
     grid-template-columns: 1fr;
-    gap: 6px;
-    margin-top: 12px;
+    gap: 4px;
+    margin-top: 8px;
     font-size: 13px;
   }
+}
+/* اللوجو والعنوان والوصف في نص الفورم */
+.signup-page .login-form__logo {
+  align-self: center;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.signup-page .login-form__header {
+  text-align: center;
+}
+
+.signup-page .login-form__header p {
+  margin-left: auto;
+  margin-right: auto;
 }
