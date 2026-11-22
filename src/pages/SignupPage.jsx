@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { User, Mail, LockKeyhole, Check, Circle } from "lucide-react";
 import InputField from "../components/InputField";
@@ -50,7 +51,8 @@ export default function SignupPage() {
       setError("Passwords do not match");
       return;
     }
-        if (userExists(form.email)) {
+
+    if (userExists(form.email)) {
       setError("An account with this email already exists");
       return;
     }
@@ -81,6 +83,7 @@ export default function SignupPage() {
               value={form.fullName}
               onChange={handleChange}
             />
+
             <InputField
               icon={Mail}
               type="email"
@@ -89,6 +92,7 @@ export default function SignupPage() {
               value={form.email}
               onChange={handleChange}
             />
+
             <InputField
               icon={LockKeyhole}
               type="password"
@@ -97,6 +101,22 @@ export default function SignupPage() {
               value={form.password}
               onChange={handleChange}
             />
+
+            {form.password.length > 0 && (
+              <ul className="password-rules">
+                {passwordRules.map((rule) => {
+                  const passed = rule.test(form.password);
+
+                  return (
+                    <li key={rule.id} className={passed ? "is-valid" : ""}>
+                      {passed ? <Check size={16} /> : <Circle size={16} />}
+                      {rule.label}
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+
             <InputField
               icon={LockKeyhole}
               type="password"
@@ -106,20 +126,6 @@ export default function SignupPage() {
               onChange={handleChange}
             />
           </div>
-
-          {form.password.length > 0 && (
-            <ul className="password-rules">
-              {passwordRules.map((rule) => {
-                const passed = rule.test(form.password);
-                return (
-                  <li key={rule.id} className={passed ? "is-valid" : ""}>
-                    {passed ? <Check size={16} /> : <Circle size={16} />}
-                    {rule.label}
-                  </li>
-                );
-              })}
-            </ul>
-          )}
 
           {error && <p className="signup-error">{error}</p>}
 
