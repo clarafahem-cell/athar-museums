@@ -62,7 +62,7 @@
   padding: 0 calc(var(--bk, 1px) * 12);
   background: #f8ebdb;
   border-radius: calc(var(--bk, 1px) * 12);
-  font-size: calc(var(--bk, 1px) * 28);
+  font-size: 16px;
   font-weight: 700;
 }
 

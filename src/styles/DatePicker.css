@@ -1,7 +1,7 @@
-/* --bk = 1px على فريم الفيجما (1600px)، وبتتعرّف في صفحة الحجز في الخطوة 6 */
 
 .date-picker {
   position: relative;
+  width: 88%;
 }
 
 .date-picker__field {
@@ -47,17 +47,21 @@
   transform: rotate(180deg);
 }
 
-/* التقويم */
+/* Calendar */
+
 .date-picker__popup {
-   position: static;
+  position: static;
   margin-top: calc(var(--bk, 1px) * 6);
   z-index: 30;
   width: calc(var(--bk, 1px) * 434);
   max-width: 100%;
-  padding: calc(var(--bk, 1px) * 16) calc(var(--bk, 1px) * 22) calc(var(--bk, 1px) * 18);
+  box-sizing: border-box;
+  padding: calc(var(--bk, 1px) * 16) calc(var(--bk, 1px) * 22)
+    calc(var(--bk, 1px) * 18);
   background: #fff;
   border-radius: calc(var(--bk, 1px) * 20);
-  box-shadow: 0 calc(var(--bk, 1px) * 8) calc(var(--bk, 1px) * 24) rgba(0, 0, 0, 0.14);
+  box-shadow: 0 calc(var(--bk, 1px) * 8)
+    calc(var(--bk, 1px) * 24) rgba(0, 0, 0, 0.14);
 }
 
 .date-picker__header {
@@ -136,4 +140,20 @@
 .date-picker__day:disabled {
   color: #cfc9bb;
   cursor: not-allowed;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .date-picker__popup {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 0;
+  }
+}
+@media (min-width: 769px) {
+  .date-picker__popup.is-hidden {
+    visibility: hidden;
+    pointer-events: none;
+  }
 }

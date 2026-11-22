@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import DatePicker from "../components/DatePicker";
@@ -11,33 +12,71 @@ import "../styles/BookingPage.css";
 
 const BASE = import.meta.env.BASE_URL;
 
+const EMPTY_COUNTS = { adult: 0, child: 0, student: 0 };
+
 export default function BookingPage() {
   const [typeId, setTypeId] = useState("museum");
   const [date, setDate] = useState(null);
   const [time, setTime] = useState("");
   const [language, setLanguage] = useState("");
   const [nationality, setNationality] = useState("egyptian");
-  const [counts, setCounts] = useState({ adult: 0, child: 0, student: 0 });
+
+  // كل جنسية لها عدادات مستقلة
+  const [countsByNationality, setCountsByNationality] = useState({
+    egyptian: { ...EMPTY_COUNTS },
+    other: { ...EMPTY_COUNTS },
+  });
 
   const type = TICKET_TYPES.find((t) => t.id === typeId);
-  const prices = PRICES[nationality];
 
-  const totalTickets = VISITOR_TYPES.reduce((sum, v) => sum + counts[v.id], 0);
-  const total = VISITOR_TYPES.reduce(
-    (sum, v) => sum + counts[v.id] * prices[v.id],
+  // العدادات الخاصة بالجنسية المختارة حاليًا
+  const counts = countsByNationality[nationality];
+
+  const egyptianCounts = countsByNationality.egyptian;
+  const otherCounts = countsByNationality.other;
+
+  // عدد التذاكر لكل جنسية
+  const getTicketCount = (nationalityCounts) =>
+    VISITOR_TYPES.reduce(
+      (sum, v) => sum + nationalityCounts[v.id],
+      0
+    );
+
+  const egyptianTicketCount = getTicketCount(egyptianCounts);
+  const otherTicketCount = getTicketCount(otherCounts);
+
+  const totalTickets = egyptianTicketCount + otherTicketCount;
+
+  // حساب إجمالي المصريين بالجنيه
+  const totalEgyptian = VISITOR_TYPES.reduce(
+    (sum, v) => sum + egyptianCounts[v.id] * PRICES.egyptian[v.id],
     0
   );
 
-  // مثال: Egyptian: Adult 2, Student 1
-  const visitorsText =
-    totalTickets === 0
-      ? ""
-      : `${nationality === "egyptian" ? "Egyptian" : "Other"}: ` +
-        VISITOR_TYPES.filter((v) => counts[v.id] > 0)
-          .map((v) => `${v.label} ${counts[v.id]}`)
-          .join(", ");
+  // حساب إجمالي الأجانب بالدولار
+  const totalOther = VISITOR_TYPES.reduce(
+    (sum, v) => sum + otherCounts[v.id] * PRICES.other[v.id],
+    0
+  );
 
-    // الشروط الناقصة (بتتحدّث مع كل اختيار)
+  // عرض أعداد الزوار من الجنسيتين
+  const getVisitorsText = (nationalityCounts, label) => {
+    const selectedVisitors = VISITOR_TYPES
+      .filter((v) => nationalityCounts[v.id] > 0)
+      .map((v) => `${v.label} ${nationalityCounts[v.id]}`);
+
+    return selectedVisitors.length
+      ? `${label}: ${selectedVisitors.join(", ")}`
+      : "";
+  };
+
+  const visitorsText = [
+    getVisitorsText(egyptianCounts, "Egyptian"),
+    getVisitorsText(otherCounts, "Other Nationality"),
+  ]
+    .filter(Boolean)
+    .join(" | ");
+
   const missing = [
     !date && "Date",
     !time && "Time",
@@ -49,23 +88,31 @@ export default function BookingPage() {
 
   const handleTypeChange = (id) => {
     setTypeId(id);
-    // المتحف مفيهوش لغة، فنمسح أي لغة كانت مختارة
-    if (!TICKET_TYPES.find((t) => t.id === id).needsLanguage) setLanguage("");
+
+    if (!TICKET_TYPES.find((t) => t.id === id).needsLanguage) {
+      setLanguage("");
+    }
   };
 
-  const handleCountChange = (id, value) =>
-    setCounts((prev) => ({ ...prev, [id]: value }));
+  const handleCountChange = (id, value) => {
+    setCountsByNationality((prev) => ({
+      ...prev,
+      [nationality]: {
+        ...prev[nationality],
+        [id]: value,
+      },
+    }));
+  };
 
   const handleContinue = () => {
-    // هنا هتربط بالـ API أو الصفحة اللي بعد كده
     console.log("Booking:", {
       type: type.label,
       date,
       time,
       language: type.needsLanguage ? language : null,
-      nationality,
-      counts,
-      total,
+      countsByNationality,
+      totalEgyptian,
+      totalOther,
     });
   };
 
@@ -84,6 +131,7 @@ export default function BookingPage() {
         <div className="booking__body">
           <section className="booking__card">
             <h2 className="booking__label">Select Ticket Type</h2>
+
             <div className="booking__types" role="radiogroup" aria-label="Ticket type">
               {TICKET_TYPES.map((t) => (
                 <button
@@ -101,7 +149,6 @@ export default function BookingPage() {
             </div>
 
             <div className="booking__grid">
-              {/* العمود الشمال: التاريخ ثم الوقت */}
               <div className="booking__col">
                 <h2 className="booking__label">Select Visit Date</h2>
                 <div className="booking__field">
@@ -114,7 +161,6 @@ export default function BookingPage() {
                 </div>
               </div>
 
-              {/* العمود اليمين: اللغة (للروبوت وSelf Guided بس) ثم التذاكر */}
               <div className="booking__col">
                 {type.needsLanguage && (
                   <div className="booking__lang">
@@ -147,8 +193,9 @@ export default function BookingPage() {
             language={language}
             showLanguage={type.needsLanguage}
             visitorsText={visitorsText}
-            total={total}
-             missing={missing}
+            totalEgyptian={totalEgyptian}
+            totalOther={totalOther}
+            missing={missing}
             disabled={!canContinue}
             onContinue={handleContinue}
           />

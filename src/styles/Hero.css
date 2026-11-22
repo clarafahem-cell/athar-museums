@@ -36,7 +36,7 @@
 
 @media (max-width: 900px) {
   .hero {
-    min-height: 400px;
+    min-height: 200px;
   }
 
   .hero__content {
@@ -49,6 +49,6 @@
   }
 
   .hero__text {
-    max-width: 58%;
+    max-width: 70%;
   }
 }

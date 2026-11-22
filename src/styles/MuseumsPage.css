@@ -84,3 +84,14 @@
     padding: 0 24px 40px;
   }
 }
+.filter{
+  display:none;
+}
+/* بعد شيل الفلتر: الكروت تاخد العرض كله */
+.museums-page__body {
+  display: block;
+}
+
+.museums-page__body .museum-list {
+  width: 100%;
+}

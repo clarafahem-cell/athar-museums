@@ -81,7 +81,7 @@
 }
 
 .booking__label {
-  margin: 0;
+  margin: 7px;
   font-size: calc(var(--bk) * 22);
   line-height: calc(var(--bk) * 30);
   font-weight: 700;

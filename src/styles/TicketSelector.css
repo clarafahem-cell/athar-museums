@@ -7,7 +7,7 @@
 .ticket-select__nat {
   display: flex;
   gap: calc(var(--bk, 1px) * 4);
-  margin-left: calc(var(--bk, 1px) * 11);
+  margin-left: -6px;
 }
 
 .ticket-select__pill {
@@ -103,8 +103,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: calc(var(--bk, 1px) * 42);
-  height: calc(var(--bk, 1px) * 42);
+  width: 24px;
+  height: 24px;
   padding: 0;
   background: #fff;
   border: calc(var(--bk, 1px) * 2) solid #b3963f;
@@ -112,6 +112,7 @@
   color: #1d3557;
   cursor: pointer;
   transition: background 0.15s;
+
 }
 
 .ticket-row__btn svg {
@@ -144,4 +145,9 @@
 .ticket-row__count.is-active {
   font-weight: 600;
   color: #fff;
+}
+@media (max-width: 768px) {
+  .ticket-row__counter {
+    margin-right: 40px;
+  }
 }

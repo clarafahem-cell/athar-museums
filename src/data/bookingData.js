@@ -15,7 +15,7 @@ export const TIME_SLOTS = [
 ];
 
 
-export const LANGUAGES = ["English", "Arabic", "French", "German", "Spanish", "Italian"];
+export const LANGUAGES = ["English", "Arabic", "Spanish", "Italian"];
 
 export const NATIONALITIES = [
   { id: "egyptian", label: "Egyptian" },
@@ -25,7 +25,7 @@ export const NATIONALITIES = [
 
 export const PRICES = {
   egyptian: { adult: 220, child: 110, student: 110 },
-  other: { adult: 220, child: 110, student: 110 },
+  other: { adult: 50, child: 30, student: 25 },
 };
 
 export const VISITOR_TYPES = [

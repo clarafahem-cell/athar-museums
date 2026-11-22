@@ -1,32 +1,21 @@
-import { useState } from "react";
 import "../styles/MuseumsPage.css";
 import heroBg from "../assets/images/hero-bg.png";
 import Hero from "../components/Hero";
-import FilterSidebar from "../components/FilterSidebar";
 import MuseumList from "../components/MuseumList";
 import museums from "../data/museums";
 
-function MuseumsPage() {
-  const [search, setSearch] = useState("");
-  const [location, setLocation] = useState("All Locations");
-  const [types, setTypes] = useState([]);
-  const [sortBy, setSortBy] = useState("Most Popular");
+// query جاي من أيقونة السيرش اللي في الـ Navbar (عن طريق App.jsx)
+function MuseumsPage({ query = "" }) {
+  const q = query.trim().toLowerCase();
 
-  const toggleType = (type) => {
-    setTypes((prev) =>
-      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
-    );
-  };
-
+  // البحث بالاسم أو بالمدينة (فلو كتبت Giza هيطلعلك متاحف الجيزة)
   const filteredMuseums = museums
-    .filter((m) => m.name.toLowerCase().includes(search.toLowerCase()))
-    .filter((m) => location === "All Locations" || m.city === location)
-    .filter((m) => types.length === 0 || types.includes(m.type))
-    .sort((a, b) =>
-      sortBy === "Most Popular"
-        ? b.popularity - a.popularity
-        : a.name.localeCompare(b.name)
-    );
+    .filter(
+      (m) =>
+        m.name.toLowerCase().includes(q) ||
+        (m.city && m.city.toLowerCase().includes(q))
+    )
+    .sort((a, b) => b.popularity - a.popularity);
 
   return (
     <main className="museums-page">
@@ -37,17 +26,21 @@ function MuseumsPage() {
       <Hero />
 
       <section className="museums-page__body">
-        <FilterSidebar
-          search={search}
-          setSearch={setSearch}
-          location={location}
-          setLocation={setLocation}
-          types={types}
-          toggleType={toggleType}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-        />
-        <MuseumList museums={filteredMuseums} />
+        {filteredMuseums.length > 0 ? (
+          <MuseumList museums={filteredMuseums} />
+        ) : (
+          <p
+            style={{
+              width: "100%",
+              padding: "48px 16px",
+              textAlign: "center",
+              fontSize: "18px",
+              color: "var(--color-muted)",
+            }}
+          >
+            No museums found for “{query}”
+          </p>
+        )}
       </section>
     </main>
   );

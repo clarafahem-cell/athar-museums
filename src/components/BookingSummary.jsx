@@ -1,4 +1,12 @@
-import { CalendarDays, Clock, Ticket, Users, Languages, ChevronRight } from "lucide-react";
+
+import {
+  CalendarDays,
+  Clock,
+  Ticket,
+  Users,
+  Languages,
+  ChevronRight,
+} from "lucide-react";
 import { formatDate } from "../data/bookingData";
 import "../styles/BookingSummary.css";
 
@@ -11,12 +19,12 @@ export default function BookingSummary({
   language,
   showLanguage,
   visitorsText,
-  total,
+  totalEgyptian,
+  totalOther,
   missing = [],
   disabled,
   onContinue,
 }) {
-  // أي قيمة فاضية بتظهر كـ "—" لحد ما المستخدم يختار
   const rows = [
     { icon: CalendarDays, label: "Date", value: date ? formatDate(date) : "" },
     { icon: Clock, label: "Time", value: time ? time.replace(":", " : ") : "" },
@@ -44,12 +52,19 @@ export default function BookingSummary({
       </ul>
 
       <div className="summary__total">
-        <span>Total</span>
-        <span>EGP {total}</span>
+        <span>Egyptian Total</span>
+        <span>EGP {totalEgyptian}</span>
+      </div>
+
+      <div className="summary__total">
+        <span>Other Nationality Total</span>
+        <span>USD {totalOther}</span>
       </div>
 
       {missing.length > 0 && (
-        <p className="summary__hint">Please select: {missing.join(", ")}</p>
+        <p className="summary__hint">
+          Please select: {missing.join(", ")}
+        </p>
       )}
 
       <button
