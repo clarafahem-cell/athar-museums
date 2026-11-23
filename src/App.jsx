@@ -1,12 +1,13 @@
+
 import { useState } from "react";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import BookingPage from "./pages/BookingPage";
+import PaymentPage from "./pages/PaymentPage";
 import Navbar from "./components/Navbar";
 import MuseumsPage from "./pages/MuseumsPage";
 
 function App() {
-  // نص البحث بيتحفظ هنا عشان الـ Navbar وصفحة المتاحف يشتركوا فيه
   const [query, setQuery] = useState("");
 
   const params = new URLSearchParams(window.location.search);
@@ -27,6 +28,10 @@ function App() {
 
   if (page === "booking") {
     return <BookingPage />;
+  }
+
+  if (page === "payment") {
+    return <PaymentPage />;
   }
 
   return <LoginPage />;

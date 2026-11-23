@@ -1,0 +1,164 @@
+.pay-card {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 36px 40px 44px;
+  text-align: center;
+  background-color: #faf9f4;
+  border: 1px solid #e6e2d6;
+  border-radius: 26px;
+  box-shadow: 0 6px 22px rgba(60, 50, 20, 0.08);
+}
+
+.pay-card__check {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background-color: var(--color-gold);
+  color: #fff;
+}
+
+.pay-card__check svg {
+  width: 38px;
+  height: 38px;
+}
+
+.pay-card__title {
+  font-family: "Lora", Georgia, serif;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-navy);
+}
+
+.pay-card__sub {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #7b8088;
+}
+
+.pay-card__envelope {
+  display: block;
+  width: 140px;
+  height: auto;
+  margin: 22px auto 20px;
+}
+
+.pay-card__sent {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-navy);
+}
+
+.pay-card__email {
+  margin-top: 12px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-gold);
+}
+
+.pay-card__hint {
+  margin-top: 12px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #8b8e94;
+}
+
+.pay-card__ref {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  margin: 28px auto 0;
+  padding: 14px 20px 16px;
+  max-width: 100%;
+  border: 1.5px dashed #c9b57a;
+  border-radius: 12px;
+  background-color: #fcfbf7;
+}
+
+.pay-card__ref-label {
+  font-size: 12px;
+  color: #8b8e94;
+}
+
+.pay-card__ref-code {
+  font-family: "Lora", Georgia, serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  color: var(--color-gold);
+}
+
+.pay-card__actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.pay-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 50px;
+  padding: 0 32px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pay-btn:hover {
+  transform: translateY(-2px);
+}
+
+.pay-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.pay-btn--outline {
+  border: 1.5px solid var(--color-gold);
+  background-color: #fff;
+  color: var(--color-navy);
+}
+
+.pay-btn--gold {
+  border: 1.5px solid var(--color-gold);
+  background-color: var(--color-gold);
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .pay-card {
+    padding: 28px 20px 32px;
+    border-radius: 20px;
+  }
+
+  .pay-card__title {
+    font-size: 26px;
+  }
+
+  .pay-card__sent {
+    font-size: 16px;
+  }
+
+  .pay-card__email {
+    font-size: 18px;
+  }
+
+  .pay-card__ref-code {
+    font-size: 21px;
+    letter-spacing: 1.5px;
+  }
+
+  .pay-btn {
+    width: 100%;
+  }
+}

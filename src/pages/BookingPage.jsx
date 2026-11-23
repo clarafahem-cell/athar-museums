@@ -21,38 +21,31 @@ export default function BookingPage() {
   const [language, setLanguage] = useState("");
   const [nationality, setNationality] = useState("egyptian");
 
-  // عدادات مستقلة لكل جنسية
   const [countsByNationality, setCountsByNationality] = useState({
     egyptian: { ...EMPTY_COUNTS },
     other: { ...EMPTY_COUNTS },
   });
 
   const type = TICKET_TYPES.find((t) => t.id === typeId);
-
-  // عدادات الجنسية المختارة فقط
   const counts = countsByNationality[nationality];
 
-  // حساب عدد التذاكر للجنسية المختارة
   const totalTickets = VISITOR_TYPES.reduce(
     (sum, v) => sum + counts[v.id],
     0
   );
 
-  // حساب إجمالي المصريين بالجنيه
   const totalEgyptian = VISITOR_TYPES.reduce(
     (sum, v) =>
       sum + countsByNationality.egyptian[v.id] * PRICES.egyptian[v.id],
     0
   );
 
-  // حساب إجمالي الأجانب بالدولار
   const totalOther = VISITOR_TYPES.reduce(
     (sum, v) =>
       sum + countsByNationality.other[v.id] * PRICES.other[v.id],
     0
   );
 
-  // عرض زوار الجنسية المختارة فقط
   const visitorsText = VISITOR_TYPES
     .filter((v) => counts[v.id] > 0)
     .map((v) => `${v.label} ${counts[v.id]}`)
@@ -75,7 +68,6 @@ export default function BookingPage() {
     }
   };
 
-  // تعديل عدادات الجنسية المختارة فقط
   const handleCountChange = (id, value) => {
     setCountsByNationality((prev) => ({
       ...prev,
@@ -86,8 +78,18 @@ export default function BookingPage() {
     }));
   };
 
-  // عند الضغط على Continue
   const handleContinue = () => {
+    if (!canContinue) return;
+
+    const ticketPrice =
+      nationality === "egyptian" ? totalEgyptian : totalOther;
+
+    const serviceFee = Number((ticketPrice * 0.03).toFixed(2));
+
+    const finalTotal = Number(
+      (ticketPrice + serviceFee).toFixed(2)
+    );
+
     const bookingData = {
       type: type.label,
       date,
@@ -95,21 +97,19 @@ export default function BookingPage() {
       nationality,
       language: type.needsLanguage ? language : null,
       counts: { ...counts },
-      total:
-        nationality === "egyptian"
-          ? totalEgyptian
-          : totalOther,
-      currency:
-        nationality === "egyptian" ? "EGP" : "USD",
+      visitorsText,
+      ticketPrice,
+      serviceFee,
+      total: finalTotal,
+      currency: nationality === "egyptian" ? "EGP" : "USD",
     };
 
-    console.log("Booking:", bookingData);
+    sessionStorage.setItem(
+      "atharBooking",
+      JSON.stringify(bookingData)
+    );
 
-    // تصفير عدادات الجنسيتين بعد إتمام Continue
-    setCountsByNationality({
-      egyptian: { ...EMPTY_COUNTS },
-      other: { ...EMPTY_COUNTS },
-    });
+    window.location.href = `${BASE}?page=payment`;
   };
 
   return (
