@@ -13,6 +13,13 @@ function PaymentPage() {
     sessionStorage.getItem("atharBooking") || "{}"
   );
 
+  // استرجاع بيانات المستخدم الحالي
+  const currentUser = JSON.parse(
+    sessionStorage.getItem("user") ||
+    localStorage.getItem("user") ||
+    "{}"
+  );
+
   const handleResend = () => {
     alert("Your confirmation email will be resent.");
   };
@@ -28,7 +35,7 @@ function PaymentPage() {
       <main className="payment-page__content">
         <div className="payment-page__cards">
           <PaymentSuccessCard
-            email="yo***@example.com"
+            email={currentUser.email || "Email not available"}
             reference="ATH-2025-10248"
             onResend={handleResend}
             onHome={handleHome}

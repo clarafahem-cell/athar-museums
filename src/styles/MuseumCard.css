@@ -17,7 +17,7 @@
 
 .museum-card__image {
   position: relative;
-  height: 90px;
+  height: 195px;
   background-color: var(--color-placeholder);
   border-radius: 8px;
   margin-bottom: 14px;
@@ -71,7 +71,7 @@
 
 .museum-card__link {
   display: inline-block;
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--color-gold);
   margin: 0 6px;

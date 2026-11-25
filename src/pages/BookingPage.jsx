@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import DatePicker from "../components/DatePicker";
 import TimeSlots from "../components/TimeSlots";
 import LanguageSelect from "../components/LanguageSelect";
+import MuseumSelect from "../components/MuseumSelect";
 import TicketSelector from "../components/TicketSelector";
 import BookingSummary from "../components/BookingSummary";
 import { PRICES, TICKET_TYPES, VISITOR_TYPES } from "../data/bookingData";
@@ -16,6 +17,7 @@ const EMPTY_COUNTS = { adult: 0, child: 0, student: 0 };
 
 export default function BookingPage() {
   const [typeId, setTypeId] = useState("museum");
+  const [museum, setMuseum] = useState("");
   const [date, setDate] = useState(null);
   const [time, setTime] = useState("");
   const [language, setLanguage] = useState("");
@@ -52,6 +54,7 @@ export default function BookingPage() {
     .join(", ");
 
   const missing = [
+    !museum && "Museum",
     !date && "Date",
     !time && "Time",
     type.needsLanguage && !language && "Language",
@@ -91,6 +94,7 @@ export default function BookingPage() {
     );
 
     const bookingData = {
+      museum,
       type: type.label,
       date,
       time,
@@ -154,6 +158,15 @@ export default function BookingPage() {
 
             <div className="booking__grid">
               <div className="booking__col">
+                <h2 className="booking__label">Select Museum</h2>
+
+                <div className="booking__field">
+                  <MuseumSelect
+                    value={museum}
+                    onChange={setMuseum}
+                  />
+                </div>
+
                 <h2 className="booking__label">Select Visit Date</h2>
 
                 <div className="booking__field">

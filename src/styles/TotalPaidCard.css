@@ -55,41 +55,52 @@
   gap: 12px;
   padding: 10px 0;
   color: var(--color-navy);
-  font-size: 13px;
+  font-size: 15px;
   border-bottom: 1px solid #e9e5d9;
+}
+
+.total-paid__qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 12px 0;
+}
+
+.total-paid__qr svg {
+  display: block;
+  width: 88px;
+  height: 88px;
+  padding: 5px;
+  background: white;
+  border: 1px solid #e6e2d6;
+  border-radius: 7px;
+}
+
+.total-paid__qr span {
+  color: #8b8b83;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  font-weight: 600;
 }
 
 .total-paid__divider {
   width: 100%;
-  margin-top: auto;
+  margin-top: 0;
   border-top: 1px solid #e6e2d6;
 }
 
-.total-paid__status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 18px 0;
-  color: #66845d;
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.total-paid__status-icon {
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #66845d;
-  color: white;
-  font-size: 13px;
+.total-paid__final {
+  width: 100%;
+  padding: 20px 0;
+  border-bottom: none;
 }
 
 .total-paid__skyline {
   width: 100%;
   height: auto;
-  margin-top: 8px;
+  margin-top: auto;
 }
 
 @media (max-width: 600px) {
@@ -98,4 +109,3 @@
     min-height: 350px;
   }
 }
-

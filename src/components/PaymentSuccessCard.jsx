@@ -15,7 +15,7 @@ function PaymentSuccessCard({
         </svg>
       </div>
 
-      <h2 className="pay-card__title">Payment Successful</h2>
+      <h2 className="pay-card__title">Booking Successful</h2>
       <p className="pay-card__sub">Your booking is confirmed.</p>
 
       <QrEnvelope className="pay-card__envelope" />
