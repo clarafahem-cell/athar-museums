@@ -6,6 +6,7 @@ import {
   Users,
   Languages,
   ChevronRight,
+  Landmark,
 } from "lucide-react";
 import { formatDate } from "../data/bookingData";
 import "../styles/BookingSummary.css";
@@ -13,6 +14,7 @@ import "../styles/BookingSummary.css";
 const EMPTY = "—";
 
 export default function BookingSummary({
+  museum,
   date,
   time,
   ticketLabel,
@@ -27,6 +29,7 @@ export default function BookingSummary({
   onContinue,
 }) {
   const rows = [
+    { icon: Landmark, label: "Museum", value: museum || "" },
     { icon: CalendarDays, label: "Date", value: date ? formatDate(date) : "" },
     { icon: Clock, label: "Time", value: time ? time.replace(":", " : ") : "" },
     { icon: Ticket, label: "Ticket Type", value: ticketLabel || "" },

@@ -167,7 +167,12 @@ export default function BookingPage() {
                   />
                 </div>
 
-                <h2 className="booking__label">Select Visit Date</h2>
+                <h2
+                  className="booking__label"
+                  style={{ marginTop: "20px" }}
+                >
+                  Select Visit Date
+                </h2>
 
                 <div className="booking__field">
                   <DatePicker value={date} onChange={setDate} />
@@ -210,6 +215,7 @@ export default function BookingPage() {
           </section>
 
           <BookingSummary
+            museum={museum}
             date={date}
             time={time}
             ticketLabel={type.label}

@@ -6,8 +6,8 @@
   display: flex;
   align-items: center;
   gap: calc(var(--bk, 1px) * 12);
-  width: 100%;
-  height: calc(var(--bk, 1px) * 59);
+  width: 88%;
+  height: 55px;
   padding: 0 calc(var(--bk, 1px) * 20);
   background: #fcf5ea;
   border: calc(var(--bk, 1px) * 1.5) solid #f0dcc0;
