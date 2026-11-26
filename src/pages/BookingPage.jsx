@@ -8,6 +8,7 @@ import MuseumSelect from "../components/MuseumSelect";
 import TicketSelector from "../components/TicketSelector";
 import BookingSummary from "../components/BookingSummary";
 import { PRICES, TICKET_TYPES, VISITOR_TYPES } from "../data/bookingData";
+import { useLanguage } from "../context/LanguageContext";
 import "../styles/BookingPage.css";
 
 const BASE = import.meta.env.BASE_URL;
@@ -15,11 +16,14 @@ const BASE = import.meta.env.BASE_URL;
 const EMPTY_COUNTS = { adult: 0, child: 0, student: 0 };
 
 export default function BookingPage() {
+  const { language } = useLanguage();
+  const isArabic = language === "AR";
+
   const [typeId, setTypeId] = useState("museum");
   const [museum, setMuseum] = useState("");
   const [date, setDate] = useState(null);
   const [time, setTime] = useState("");
-  const [language, setLanguage] = useState("");
+  const [languageSelected, setLanguageSelected] = useState("");
   const [nationality, setNationality] = useState("egyptian");
 
   const [countsByNationality, setCountsByNationality] = useState({
@@ -49,15 +53,20 @@ export default function BookingPage() {
 
   const visitorsText = VISITOR_TYPES
     .filter((v) => counts[v.id] > 0)
-    .map((v) => `${v.label} ${counts[v.id]}`)
-    .join(", ");
+    .map((v) => {
+      const label = isArabic ? v.labelAr : v.label;
+      return `${label} ${counts[v.id]}`;
+    })
+    .join(isArabic ? "، " : ", ");
 
   const missing = [
-    !museum && "Museum",
-    !date && "Date",
-    !time && "Time",
-    type.needsLanguage && !language && "Language",
-    totalTickets === 0 && "Tickets",
+    !museum && (isArabic ? "المتحف" : "Museum"),
+    !date && (isArabic ? "التاريخ" : "Date"),
+    !time && (isArabic ? "الوقت" : "Time"),
+    type.needsLanguage &&
+      !languageSelected &&
+      (isArabic ? "اللغة" : "Language"),
+    totalTickets === 0 && (isArabic ? "التذاكر" : "Tickets"),
   ].filter(Boolean);
 
   const canContinue = missing.length === 0;
@@ -66,7 +75,7 @@ export default function BookingPage() {
     setTypeId(id);
 
     if (!TICKET_TYPES.find((t) => t.id === id).needsLanguage) {
-      setLanguage("");
+      setLanguageSelected("");
     }
   };
 
@@ -98,9 +107,12 @@ export default function BookingPage() {
       date,
       time,
       nationality,
-      language: type.needsLanguage ? language : null,
+      language: type.needsLanguage ? languageSelected : null,
       counts: { ...counts },
-      visitorsText,
+      visitorsText: VISITOR_TYPES
+        .filter((v) => counts[v.id] > 0)
+        .map((v) => `${v.label} ${counts[v.id]}`)
+        .join(", "),
       ticketPrice,
       serviceFee,
       total: finalTotal,
@@ -120,16 +132,20 @@ export default function BookingPage() {
       <Navbar variant="booking" />
 
       <div className="booking__inner">
-        <h1 className="booking__page-title">Book Your Ticket</h1>
+        <h1 className="booking__page-title">
+          {isArabic ? "احجز تذكرتك" : "Book Your Ticket"}
+        </h1>
 
         <div className="booking__body">
           <section className="booking__card">
-            <h2 className="booking__label">Select Ticket Type</h2>
+            <h2 className="booking__label">
+              {isArabic ? "اختر نوع التذكرة" : "Select Ticket Type"}
+            </h2>
 
             <div
               className="booking__types"
               role="radiogroup"
-              aria-label="Ticket type"
+              aria-label={isArabic ? "نوع التذكرة" : "Ticket type"}
             >
               {TICKET_TYPES.map((t) => (
                 <button
@@ -143,14 +159,16 @@ export default function BookingPage() {
                   onClick={() => handleTypeChange(t.id)}
                 >
                   <span className="booking__radio" />
-                  {t.label}
+                  {isArabic ? t.labelAr : t.label}
                 </button>
               ))}
             </div>
 
             <div className="booking__grid">
               <div className="booking__col">
-                <h2 className="booking__label">Select Museum</h2>
+                <h2 className="booking__label">
+                  {isArabic ? "اختر المتحف" : "Select Museum"}
+                </h2>
 
                 <div className="booking__field">
                   <MuseumSelect
@@ -163,7 +181,7 @@ export default function BookingPage() {
                   className="booking__label"
                   style={{ marginTop: "20px" }}
                 >
-                  Select Visit Date
+                  {isArabic ? "اختر تاريخ الزيارة" : "Select Visit Date"}
                 </h2>
 
                 <div className="booking__field">
@@ -171,7 +189,9 @@ export default function BookingPage() {
                 </div>
 
                 <div className="booking__time">
-                  <h2 className="booking__label">Select Time</h2>
+                  <h2 className="booking__label">
+                    {isArabic ? "اختر الوقت" : "Select Time"}
+                  </h2>
                   <TimeSlots value={time} onChange={setTime} />
                 </div>
               </div>
@@ -179,19 +199,23 @@ export default function BookingPage() {
               <div className="booking__col">
                 {type.needsLanguage && (
                   <div className="booking__lang">
-                    <h2 className="booking__label">Select Language</h2>
+                    <h2 className="booking__label">
+                      {isArabic ? "اختر اللغة" : "Select Language"}
+                    </h2>
 
                     <div className="booking__field">
                       <LanguageSelect
-                        value={language}
-                        onChange={setLanguage}
+                        value={languageSelected}
+                        onChange={setLanguageSelected}
                       />
                     </div>
                   </div>
                 )}
 
                 <div className="booking__ticket">
-                  <h2 className="booking__label">Select Ticket</h2>
+                  <h2 className="booking__label">
+                    {isArabic ? "اختر التذاكر" : "Select Ticket"}
+                  </h2>
 
                   <div className="booking__field booking__field--tickets">
                     <TicketSelector
@@ -211,7 +235,7 @@ export default function BookingPage() {
             date={date}
             time={time}
             ticketLabel={type.label}
-            language={language}
+            language={languageSelected}
             showLanguage={type.needsLanguage}
             visitorsText={visitorsText}
             totalEgyptian={totalEgyptian}

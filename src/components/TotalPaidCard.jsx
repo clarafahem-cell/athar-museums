@@ -1,4 +1,5 @@
 
+import { useLanguage } from "../context/LanguageContext";
 import "../styles/TotalPaidCard.css";
 import { Ornament, Skyline } from "./PaymentIcons";
 
@@ -8,12 +9,17 @@ function TotalPaidCard({
   total = 0,
   currency = "EGP",
 }) {
+  const { language } = useLanguage();
+  const isArabic = language === "AR";
+
   const formatPrice = (amount) =>
     Number(amount).toFixed(2);
 
   return (
     <aside className="total-paid">
-      <h2 className="total-paid__title">Total Paid</h2>
+      <h2 className="total-paid__title">
+        {isArabic ? "إجمالي المدفوعات" : "Total Paid"}
+      </h2>
 
       <Ornament className="total-paid__ornament" />
 
@@ -24,12 +30,14 @@ function TotalPaidCard({
 
       <div className="total-paid__details">
         <div className="total-paid__row">
-          <span>Ticket Price</span>
+          <span>{isArabic ? "سعر التذاكر" : "Ticket Price"}</span>
           <span>{currency} {formatPrice(ticketPrice)}</span>
         </div>
 
         <div className="total-paid__row">
-          <span>Service Fee (3%)</span>
+          <span>
+            {isArabic ? "رسوم الخدمة (3%)" : "Service Fee (3%)"}
+          </span>
           <span>{currency} {formatPrice(serviceFee)}</span>
         </div>
       </div>
@@ -42,7 +50,7 @@ function TotalPaidCard({
           height="112"
           xmlns="http://www.w3.org/2000/svg"
           role="img"
-          aria-label="Sample QR code preview"
+          aria-label={isArabic ? "معاينة رمز QR" : "Sample QR code preview"}
           shapeRendering="crispEdges"
         >
           <rect width="21" height="21" fill="white" />
@@ -76,13 +84,16 @@ function TotalPaidCard({
             />
           ))}
         </svg>
-        <span>QR CODE PREVIEW</span>
+
+        <span>
+          {isArabic ? "معاينة رمز QR" : "QR CODE PREVIEW"}
+        </span>
       </div>
 
       <div className="total-paid__divider" />
 
       <div className="total-paid__row total-paid__final">
-        <strong>Total</strong>
+        <strong>{isArabic ? "الإجمالي" : "Total"}</strong>
         <strong>{currency} {formatPrice(total)}</strong>
       </div>
 

@@ -4,6 +4,7 @@ import { Mail, LockKeyhole } from "lucide-react";
 import InputField from "../components/InputField";
 import GoogleIcon from "../components/GoogleIcon";
 import { login } from "../services/authService";
+import { useLanguage } from "../context/LanguageContext";
 import logo from "../assets/images/login/logo.png";
 import hero from "../assets/images/login/hero.png";
 import "../styles/LoginPage.css";
@@ -11,6 +12,9 @@ import "../styles/LoginPage.css";
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function LoginPage() {
+  const { language } = useLanguage();
+  const isArabic = language === "AR";
+
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -20,6 +24,30 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [notFound, setNotFound] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const messages = {
+    invalidEmail: isArabic
+      ? "من فضلك أدخل بريدًا إلكترونيًا صحيحًا"
+      : "Please enter a valid email address",
+
+    missingPassword: isArabic
+      ? "من فضلك أدخل كلمة المرور"
+      : "Please enter your password",
+
+    loginFailed: isArabic
+      ? "فشل تسجيل الدخول. حاول مرة أخرى."
+      : "Login failed. Please try again.",
+
+    invalidCredentials: isArabic
+      ? "البريد الإلكتروني أو كلمة المرور غير صحيحة."
+      : "Invalid email or password.",
+
+    connectionError: isArabic
+      ? "تعذر الاتصال بالخادم. حاول مرة أخرى."
+      : "Unable to connect to the server. Please try again.",
+
+    createAccount: isArabic ? "إنشاء حساب" : "Create one",
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -37,12 +65,12 @@ export default function LoginPage() {
     e.preventDefault();
 
     if (!emailPattern.test(form.email.trim())) {
-      setError("Please enter a valid email address");
+      setError("invalidEmail");
       return;
     }
 
     if (!form.password.trim()) {
-      setError("Please enter your password");
+      setError("missingPassword");
       return;
     }
 
@@ -56,7 +84,7 @@ export default function LoginPage() {
       );
 
       if (!data.token) {
-        setError("Login failed. Please try again.");
+        setError("loginFailed");
         return;
       }
 
@@ -76,12 +104,10 @@ export default function LoginPage() {
       const message = err.response?.data?.message;
 
       if (err.response) {
-        setError(message || "Invalid email or password.");
+        setError("invalidCredentials");
         setNotFound(err.response.status === 404);
       } else {
-        setError(
-          "Unable to connect to the server. Please try again."
-        );
+        setError("connectionError");
       }
     } finally {
       setLoading(false);
@@ -103,8 +129,17 @@ export default function LoginPage() {
           />
 
           <header className="login-form__header">
-            <h1>Museum Management System</h1>
-            <p>Your heritage Our technology</p>
+            <h1>
+              {isArabic
+                ? "نظام إدارة المتاحف"
+                : "Museum Management System"}
+            </h1>
+
+            <p>
+              {isArabic
+                ? "تراثنا، تقنيتنا"
+                : "Your heritage Our technology"}
+            </p>
           </header>
 
           <div className="login-form__fields">
@@ -112,7 +147,7 @@ export default function LoginPage() {
               icon={Mail}
               type="email"
               name="email"
-              placeholder="Email Address"
+              placeholder={isArabic ? "البريد الإلكتروني" : "Email Address"}
               value={form.email}
               onChange={handleChange}
             />
@@ -121,7 +156,7 @@ export default function LoginPage() {
               icon={LockKeyhole}
               type="password"
               name="password"
-              placeholder="Password"
+              placeholder={isArabic ? "كلمة المرور" : "Password"}
               value={form.password}
               onChange={handleChange}
             />
@@ -129,13 +164,13 @@ export default function LoginPage() {
 
           {error && (
             <p className="login-error">
-              {error}{" "}
+              {messages[error]}{" "}
               {notFound && (
                 <a
                   href={`${import.meta.env.BASE_URL}?page=signup`}
                   className="login-form__link"
                 >
-                  Create one
+                  {messages.createAccount}
                 </a>
               )}
             </p>
@@ -149,11 +184,12 @@ export default function LoginPage() {
                 checked={form.remember}
                 onChange={handleChange}
               />
-              Remember me
+
+              {isArabic ? "تذكرني" : "Remember me"}
             </label>
 
             <a href="#" className="login-form__link">
-              Forget password?
+              {isArabic ? "نسيت كلمة المرور؟" : "Forget password?"}
             </a>
           </div>
 
@@ -162,11 +198,17 @@ export default function LoginPage() {
             className="login-btn login-btn--gold"
             disabled={loading}
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading
+              ? isArabic
+                ? "جارٍ تسجيل الدخول..."
+                : "Logging in..."
+              : isArabic
+                ? "تسجيل الدخول"
+                : "Login"}
           </button>
 
           <div className="login-form__divider">
-            <span>or</span>
+            <span>{isArabic ? "أو" : "or"}</span>
           </div>
 
           <button
@@ -174,16 +216,19 @@ export default function LoginPage() {
             className="login-btn login-btn--outline"
           >
             <GoogleIcon />
-            Login with Google
+            {isArabic ? "تسجيل الدخول باستخدام Google" : "Login with Google"}
           </button>
 
           <p className="login-form__signup">
-            Don’t have an account?{" "}
+            {isArabic
+              ? "ليس لديك حساب؟ "
+              : "Don’t have an account? "}
+
             <a
               href={`${import.meta.env.BASE_URL}?page=signup`}
               className="login-form__link"
             >
-              Create one
+              {messages.createAccount}
             </a>
           </p>
         </form>

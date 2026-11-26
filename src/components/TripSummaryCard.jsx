@@ -10,9 +10,15 @@ import {
 } from "lucide-react";
 
 import tripBanner from "../assets/images/trip-summary-banner.png";
+import { TICKET_TYPES, VISITOR_TYPES } from "../data/bookingData";
+import museums from "../data/museums";
+import { useLanguage } from "../context/LanguageContext";
 import "../styles/TripSummaryCard.css";
 
 function TripSummaryCard({ bookingData = {} }) {
+  const { language } = useLanguage();
+  const isArabic = language === "AR";
+
   const {
     museum,
     type,
@@ -23,10 +29,28 @@ function TripSummaryCard({ bookingData = {} }) {
     currency = "EGP",
   } = bookingData;
 
+  const selectedMuseum = museums.find((m) => m.name === museum);
+
+  const selectedTicket = TICKET_TYPES.find(
+    (t) => t.label === type
+  );
+
   const visitorTypes = [
-    { label: "Adults", count: counts.adult || 0, Icon: UserRound },
-    { label: "Children", count: counts.child || 0, Icon: UserRound },
-    { label: "Students", count: counts.student || 0, Icon: GraduationCap },
+    {
+      label: isArabic ? "البالغون" : "Adults",
+      count: counts.adult || 0,
+      Icon: UserRound,
+    },
+    {
+      label: isArabic ? "الأطفال" : "Children",
+      count: counts.child || 0,
+      Icon: UserRound,
+    },
+    {
+      label: isArabic ? "الطلاب" : "Students",
+      count: counts.student || 0,
+      Icon: GraduationCap,
+    },
   ].filter((visitor) => visitor.count > 0);
 
   const totalVisitors = visitorTypes.reduce(
@@ -35,29 +59,65 @@ function TripSummaryCard({ bookingData = {} }) {
   );
 
   const formattedDate = date
-    ? new Date(date).toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        timeZone: "UTC",
-      })
-    : "Not available";
+    ? new Date(date).toLocaleDateString(
+        isArabic ? "ar-EG" : "en-GB",
+        {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          timeZone: "UTC",
+        }
+      )
+    : isArabic
+      ? "غير متاح"
+      : "Not available";
 
   const details = [
-    { label: "Museum", value: museum, Icon: Landmark },
-    { label: "Ticket Type", value: type, Icon: Ticket },
-    { label: "Visit Date", value: formattedDate, Icon: CalendarDays },
-    { label: "Start Time", value: time, Icon: Clock },
+    {
+      label: isArabic ? "المتحف" : "Museum",
+      value: museum
+        ? isArabic
+          ? selectedMuseum?.nameAr || museum
+          : museum
+        : "",
+      Icon: Landmark,
+    },
+    {
+      label: isArabic ? "نوع التذكرة" : "Ticket Type",
+      value: type
+        ? isArabic
+          ? selectedTicket?.labelAr || type
+          : type
+        : "",
+      Icon: Ticket,
+    },
+    {
+      label: isArabic ? "تاريخ الزيارة" : "Visit Date",
+      value: formattedDate,
+      Icon: CalendarDays,
+    },
+    {
+      label: isArabic ? "وقت البدء" : "Start Time",
+      value: time,
+      Icon: Clock,
+    },
   ];
 
   return (
     <section className="trip-summary">
       <div className="trip-summary__image">
-        <img src={tripBanner} alt="Ancient Egyptian temple and statue" />
+        <img
+          src={tripBanner}
+          alt={
+            isArabic
+              ? "معبد وتمثال من مصر القديمة"
+              : "Ancient Egyptian temple and statue"
+          }
+        />
       </div>
 
       <h2 className="trip-summary__title">
-        Your Trip Summary
+        {isArabic ? "ملخص رحلتك" : "Your Trip Summary"}
       </h2>
 
       <div className="trip-summary__details">
@@ -69,7 +129,9 @@ function TripSummaryCard({ bookingData = {} }) {
 
             <div className="trip-summary__text">
               <span>{label}</span>
-              <strong>{value || "Not available"}</strong>
+              <strong>
+                {value || (isArabic ? "غير متاح" : "Not available")}
+              </strong>
             </div>
           </div>
         ))}
@@ -78,7 +140,7 @@ function TripSummaryCard({ bookingData = {} }) {
       <div className="trip-summary__visitors">
         <h3>
           <Users size={22} fill="currentColor" />
-          Visitors
+          {isArabic ? "الزوار" : "Visitors"}
         </h3>
 
         {visitorTypes.map(({ label, count, Icon }) => (
@@ -91,13 +153,15 @@ function TripSummaryCard({ bookingData = {} }) {
 
         <div className="trip-summary__visitors-total">
           <Users size={21} fill="currentColor" />
-          <span>Total Visitors</span>
+          <span>
+            {isArabic ? "إجمالي الزوار" : "Total Visitors"}
+          </span>
           <strong>{totalVisitors}</strong>
         </div>
       </div>
 
       <div className="trip-summary__total">
-        <span>Total</span>
+        <span>{isArabic ? "الإجمالي" : "Total"}</span>
         <strong>
           {currency} {Number(total || 0).toFixed(2)}
         </strong>
@@ -113,4 +177,3 @@ function TripSummaryCard({ bookingData = {} }) {
 }
 
 export default TripSummaryCard;
-

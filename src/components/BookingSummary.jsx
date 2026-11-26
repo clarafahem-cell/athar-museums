@@ -8,7 +8,14 @@ import {
   ChevronRight,
   Landmark,
 } from "lucide-react";
-import { formatDate } from "../data/bookingData";
+import {
+  formatDate,
+  TICKET_TYPES,
+  LANGUAGES,
+  VISITOR_TYPES,
+} from "../data/bookingData";
+import museums from "../data/museums";
+import { useLanguage } from "../context/LanguageContext";
 import "../styles/BookingSummary.css";
 
 const EMPTY = "—";
@@ -28,26 +35,95 @@ export default function BookingSummary({
   disabled,
   onContinue,
 }) {
+  const { language: siteLanguage } = useLanguage();
+  const isArabic = siteLanguage === "AR";
+
+  const selectedMuseum = museums.find((m) => m.name === museum);
+
+  const selectedTicket = TICKET_TYPES.find(
+    (t) => t.label === ticketLabel
+  );
+
+  const selectedTourLanguage = LANGUAGES.find(
+    (lang) => lang.id === language
+  );
+
   const rows = [
-    { icon: Landmark, label: "Museum", value: museum || "" },
-    { icon: CalendarDays, label: "Date", value: date ? formatDate(date) : "" },
-    { icon: Clock, label: "Time", value: time ? time.replace(":", " : ") : "" },
-    { icon: Ticket, label: "Ticket Type", value: ticketLabel || "" },
+    {
+      icon: Landmark,
+      label: isArabic ? "المتحف" : "Museum",
+      value: museum
+        ? isArabic
+          ? selectedMuseum?.nameAr || museum
+          : museum
+        : "",
+    },
+    {
+      icon: CalendarDays,
+      label: isArabic ? "التاريخ" : "Date",
+      value: date ? formatDate(date, siteLanguage) : "",
+    },
+    {
+      icon: Clock,
+      label: isArabic ? "الوقت" : "Time",
+      value: time ? time.replace(":", " : ") : "",
+    },
+    {
+      icon: Ticket,
+      label: isArabic ? "نوع التذكرة" : "Ticket Type",
+      value: ticketLabel
+        ? isArabic
+          ? selectedTicket?.labelAr || ticketLabel
+          : ticketLabel
+        : "",
+    },
     ...(showLanguage
-      ? [{ icon: Languages, label: "Language", value: language || "" }]
+      ? [
+          {
+            icon: Languages,
+            label: isArabic ? "اللغة" : "Language",
+            value: language
+              ? isArabic
+                ? selectedTourLanguage?.labelAr || language
+                : language
+              : "",
+          },
+        ]
       : []),
-    { icon: Users, label: "Visitors", value: visitorsText || "" },
+    {
+      icon: Users,
+      label: isArabic ? "الزوار" : "Visitors",
+      value: visitorsText || "",
+    },
   ];
+
+  const translatedMissing = missing.map((item) => {
+    if (!isArabic) return item;
+
+    const translations = {
+      Museum: "المتحف",
+      Date: "التاريخ",
+      Time: "الوقت",
+      Language: "اللغة",
+      Tickets: "التذاكر",
+    };
+
+    return translations[item] || item;
+  });
 
   return (
     <aside className="summary">
-      <h2 className="summary__title">Booking Summary</h2>
+      <h2 className="summary__title">
+        {isArabic ? "ملخص الحجز" : "Booking Summary"}
+      </h2>
 
       <ul className="summary__rows">
         {rows.map(({ icon: Icon, label, value }) => (
           <li className="summary__row" key={label}>
             <Icon className="summary__icon" strokeWidth={1.6} />
+
             <span className="summary__label">{label}</span>
+
             <span className={`summary__value ${value ? "" : "is-empty"}`}>
               {value || EMPTY}
             </span>
@@ -57,19 +133,26 @@ export default function BookingSummary({
 
       {nationality === "egyptian" ? (
         <div className="summary__total">
-          <span>Egyptian Total</span>
+          <span>
+            {isArabic ? "الإجمالي للمصريين" : "Egyptian Total"}
+          </span>
           <span>EGP {totalEgyptian}</span>
         </div>
       ) : (
         <div className="summary__total">
-          <span>Other Nationality Total</span>
+          <span>
+            {isArabic
+              ? "الإجمالي للجنسيات الأخرى"
+              : "Other Nationality Total"}
+          </span>
           <span>USD {totalOther}</span>
         </div>
       )}
 
       {missing.length > 0 && (
         <p className="summary__hint">
-          Please select: {missing.join(", ")}
+          {isArabic ? "من فضلك اختر: " : "Please select: "}
+          {translatedMissing.join("، ")}
         </p>
       )}
 
@@ -79,7 +162,7 @@ export default function BookingSummary({
         disabled={disabled}
         onClick={onContinue}
       >
-        Continue to Booking
+        {isArabic ? "متابعة الحجز" : "Continue to Booking"}
         <ChevronRight strokeWidth={2.5} />
       </button>
     </aside>

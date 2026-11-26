@@ -5,6 +5,7 @@ import {
   PRICES,
   VISITOR_TYPES,
 } from "../data/bookingData";
+import { useLanguage } from "../context/LanguageContext";
 import "../styles/TicketSelector.css";
 
 const MAX_PER_TYPE = 10;
@@ -15,6 +16,9 @@ export default function TicketSelector({
   counts,
   onCountChange,
 }) {
+  const { language } = useLanguage();
+  const isArabic = language === "AR";
+
   const prices = PRICES[nationality];
   const currency = nationality === "other" ? "USD" : "EGP";
 
@@ -23,7 +27,7 @@ export default function TicketSelector({
       <div
         className="ticket-select__nat"
         role="radiogroup"
-        aria-label="Nationality"
+        aria-label={isArabic ? "الجنسية" : "Nationality"}
       >
         {NATIONALITIES.map((n) => (
           <button
@@ -36,7 +40,7 @@ export default function TicketSelector({
             }`}
             onClick={() => onNationalityChange(n.id)}
           >
-            {n.label}
+            {isArabic ? n.labelAr : n.label}
           </button>
         ))}
       </div>
@@ -45,18 +49,23 @@ export default function TicketSelector({
         {VISITOR_TYPES.map((v) => {
           const count = counts[v.id];
 
+          const visitorLabel = isArabic ? v.labelAr : v.label;
+          const visitorHint = isArabic ? v.hintAr : v.hint;
+
           return (
             <div className="ticket-row" key={v.id}>
               <div className="ticket-row__label">
-                <span>{v.label}</span>
+                <span>{visitorLabel}</span>
 
                 <span
                   className="ticket-row__info"
                   tabIndex={0}
-                  aria-label={v.hint}
+                  aria-label={visitorHint}
                 >
                   <Info strokeWidth={1.8} />
-                  <span className="ticket-row__tip">{v.hint}</span>
+                  <span className="ticket-row__tip">
+                    {visitorHint}
+                  </span>
                 </span>
               </div>
 
@@ -68,7 +77,11 @@ export default function TicketSelector({
                 <button
                   type="button"
                   className="ticket-row__btn"
-                  aria-label={`Remove one ${v.label}`}
+                  aria-label={
+                    isArabic
+                      ? `إزالة تذكرة ${visitorLabel}`
+                      : `Remove one ${v.label}`
+                  }
                   disabled={count === 0}
                   onClick={() => onCountChange(v.id, count - 1)}
                 >
@@ -86,7 +99,11 @@ export default function TicketSelector({
                 <button
                   type="button"
                   className="ticket-row__btn"
-                  aria-label={`Add one ${v.label}`}
+                  aria-label={
+                    isArabic
+                      ? `إضافة تذكرة ${visitorLabel}`
+                      : `Add one ${v.label}`
+                  }
                   disabled={count === MAX_PER_TYPE}
                   onClick={() => onCountChange(v.id, count + 1)}
                 >

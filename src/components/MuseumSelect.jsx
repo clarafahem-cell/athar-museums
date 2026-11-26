@@ -2,13 +2,16 @@
 import { useState, useRef, useEffect } from "react";
 import { Landmark, ChevronDown } from "lucide-react";
 import museums from "../data/museums";
+import { useLanguage } from "../context/LanguageContext";
 import "../styles/LanguageSelect.css";
 
 export default function MuseumSelect({ value, onChange }) {
+  const { language } = useLanguage();
+  const isArabic = language === "AR";
+
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
 
-  // قفل القائمة لما تدوس برّه أو تضغط Esc
   useEffect(() => {
     const onDown = (e) => {
       if (wrapRef.current && !wrapRef.current.contains(e.target)) {
@@ -34,6 +37,10 @@ export default function MuseumSelect({ value, onChange }) {
     setOpen(false);
   };
 
+  const selectedMuseum = museums.find(
+    (museum) => museum.name === value
+  );
+
   return (
     <div className="lang-select" ref={wrapRef}>
       <button
@@ -43,9 +50,17 @@ export default function MuseumSelect({ value, onChange }) {
         onClick={() => setOpen((o) => !o)}
       >
         <Landmark className="lang-select__icon" strokeWidth={1.8} />
+
         <span className="lang-select__text">
-          {value || "Select a Museum"}
+          {selectedMuseum
+            ? isArabic
+              ? selectedMuseum.nameAr
+              : selectedMuseum.name
+            : isArabic
+              ? "اختر متحفًا"
+              : "Select a Museum"}
         </span>
+
         <ChevronDown
           className={`lang-select__chevron ${open ? "is-open" : ""}`}
           strokeWidth={2}
@@ -67,7 +82,7 @@ export default function MuseumSelect({ value, onChange }) {
                 }`}
                 onClick={() => pick(museum)}
               >
-                {museum.name}
+                {isArabic ? museum.nameAr : museum.name}
               </button>
             </li>
           ))}

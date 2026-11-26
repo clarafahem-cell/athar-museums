@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import "../styles/Navbar.css";
 import logo from "../assets/images/logo.png";
+import { useLanguage } from "../context/LanguageContext";
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -19,7 +20,7 @@ function Navbar({
 }) {
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [language, setLanguage] = useState("EN");
+  const { language, setLanguage, t } = useLanguage();
   const inputRef = useRef(null);
 
   const closeMenu = () => setOpen(false);
@@ -46,7 +47,6 @@ function Navbar({
     if (searchOpen) inputRef.current?.focus();
   }, [searchOpen]);
 
-  // Navbar الخاص بصفحة الحجز
   if (isBooking) {
     return (
       <header className="navbar navbar--booking">
@@ -56,24 +56,20 @@ function Navbar({
           </div>
         </div>
 
-        <a
-          className="navbar__back"
-          href={`${BASE}?page=museums`}
-        >
+        <a className="navbar__back" href={`${BASE}?page=museums`}>
           <ArrowLeft size={18} strokeWidth={2.2} />
-          <span>Back to Home</span>
+          <span>{t("backToHome")}</span>
         </a>
       </header>
     );
   }
 
-  // Navbar العادي لباقي الصفحات
   return (
     <header className="navbar">
       <div className="navbar__brand">
         <button
           className="navbar__menu"
-          aria-label="Open menu"
+          aria-label={t("openMenu")}
           aria-expanded={open}
           onClick={() => setOpen(true)}
         >
@@ -103,7 +99,7 @@ function Navbar({
       <nav className={`navbar__links ${open ? "open" : ""}`}>
         <button
           className="navbar__close"
-          aria-label="Close menu"
+          aria-label={t("closeMenu")}
           onClick={closeMenu}
         >
           <svg
@@ -119,20 +115,22 @@ function Navbar({
           </svg>
         </button>
 
-        <a href="#home" onClick={closeMenu}>Home</a>
-        <a href="#museums" className="active" onClick={closeMenu}>Museums</a>
-        <a href="#about" onClick={closeMenu}>About</a>
-        <a href="#contact" onClick={closeMenu}>Contact</a>
+        <a href="#home" onClick={closeMenu}>{t("home")}</a>
+        <a href="#museums" className="active" onClick={closeMenu}>
+          {t("museums")}
+        </a>
+        <a href="#about" onClick={closeMenu}>{t("about")}</a>
+        <a href="#contact" onClick={closeMenu}>{t("contact")}</a>
 
         <div className="navbar__language">
           <Globe size={18} />
-          <span>Language</span>
+          <span>{t("language")}</span>
           <ChevronDown size={16} />
 
           <select
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
-            aria-label="Select language"
+            aria-label={t("selectLanguage")}
           >
             <option value="EN">English</option>
             <option value="AR">العربية</option>
@@ -144,7 +142,7 @@ function Navbar({
         <button
           type="button"
           className={`navbar__search-btn ${query ? "has-query" : ""}`}
-          aria-label="Search"
+          aria-label={t("search")}
           aria-expanded={searchOpen}
           onClick={() => setSearchOpen((s) => !s)}
         >
@@ -171,7 +169,7 @@ function Navbar({
             <rect x="3" y="4" width="18" height="18" rx="2" />
             <path d="M16 2v4M8 2v4M3 10h18" />
           </svg>
-          Book Now
+          {t("bookNow")}
         </button>
       </div>
 
@@ -185,7 +183,7 @@ function Navbar({
         <input
           ref={inputRef}
           type="search"
-          placeholder="Search for a museum..."
+          placeholder={t("searchMuseum")}
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
         />
@@ -194,7 +192,7 @@ function Navbar({
           <button
             type="button"
             className="navbar__search-clear"
-            aria-label="Clear search"
+            aria-label={t("search")}
             onClick={() => onQueryChange("")}
           >
             <X size={16} strokeWidth={2.2} />

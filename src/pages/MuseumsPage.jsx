@@ -1,14 +1,17 @@
+
 import "../styles/MuseumsPage.css";
 import heroBg from "../assets/images/hero-bg.png";
 import Hero from "../components/Hero";
 import MuseumList from "../components/MuseumList";
 import museums from "../data/museums";
+import { useLanguage } from "../context/LanguageContext";
 
-// query جاي من أيقونة السيرش اللي في الـ Navbar (عن طريق App.jsx)
 function MuseumsPage({ query = "" }) {
+  const { language } = useLanguage();
+  const isArabic = language === "AR";
+
   const q = query.trim().toLowerCase();
 
-  // البحث بالاسم أو بالمدينة (فلو كتبت Giza هيطلعلك متاحف الجيزة)
   const filteredMuseums = museums
     .filter(
       (m) =>
@@ -38,7 +41,9 @@ function MuseumsPage({ query = "" }) {
               color: "var(--color-muted)",
             }}
           >
-            No museums found for “{query}”
+            {isArabic
+              ? `لم يتم العثور على متاحف تطابق "${query}"`
+              : `No museums found for "${query}"`}
           </p>
         )}
       </section>

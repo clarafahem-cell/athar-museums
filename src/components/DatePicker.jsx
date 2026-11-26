@@ -7,14 +7,24 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { formatDate } from "../data/bookingData";
+import { useLanguage } from "../context/LanguageContext";
 import "../styles/DatePicker.css";
 
-const WEEKDAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+const WEEKDAYS = {
+  EN: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+  AR: ["ح", "ن", "ث", "ر", "خ", "ج", "س"],
+};
 
-const MONTHS = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
-];
+const MONTHS = {
+  EN: [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December",
+  ],
+  AR: [
+    "يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو",
+    "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر",
+  ],
+};
 
 const startOfDay = (d) =>
   new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -26,6 +36,9 @@ const sameDay = (a, b) =>
   a.getDate() === b.getDate();
 
 export default function DatePicker({ value, onChange }) {
+  const { language } = useLanguage();
+  const isArabic = language === "AR";
+
   const today = startOfDay(new Date());
 
   const [isMobile, setIsMobile] = useState(
@@ -40,7 +53,6 @@ export default function DatePicker({ value, onChange }) {
     )
   );
 
-  // تحديد حجم الشاشة
   useEffect(() => {
     const media = window.matchMedia("(max-width: 768px)");
 
@@ -77,14 +89,12 @@ export default function DatePicker({ value, onChange }) {
     setView(new Date(year, month + step, 1));
   };
 
-  // اختيار التاريخ بدون قفل التقويم
   const pick = (date) => {
     onChange(date);
   };
 
   return (
     <div className="date-picker">
-
       {!isMobile && (
         <button
           type="button"
@@ -97,7 +107,11 @@ export default function DatePicker({ value, onChange }) {
           />
 
           <span className="date-picker__text">
-            {value ? formatDate(value) : "Select a Date"}
+            {value
+              ? formatDate(value, language)
+              : isArabic
+                ? "اختر التاريخ"
+                : "Select a Date"}
           </span>
 
           <ChevronDown
@@ -115,29 +129,29 @@ export default function DatePicker({ value, onChange }) {
           <button
             type="button"
             className="date-picker__nav"
-            aria-label="Previous month"
+            aria-label={isArabic ? "الشهر السابق" : "Previous month"}
             disabled={!canGoPrev}
-            onClick={() => goMonth(-1)}
+            onClick={() => goMonth(isArabic ? 1 : -1)}
           >
-            <ChevronLeft />
+            {isArabic ? <ChevronRight /> : <ChevronLeft />}
           </button>
 
           <span className="date-picker__title">
-            {MONTHS[month]} {year}
+            {MONTHS[language][month]} {year}
           </span>
 
           <button
             type="button"
             className="date-picker__nav"
-            aria-label="Next month"
-            onClick={() => goMonth(1)}
+            aria-label={isArabic ? "الشهر التالي" : "Next month"}
+            onClick={() => goMonth(isArabic ? -1 : 1)}
           >
-            <ChevronRight />
+            {isArabic ? <ChevronLeft /> : <ChevronRight />}
           </button>
         </div>
 
         <div className="date-picker__weekdays">
-          {WEEKDAYS.map((d) => (
+          {WEEKDAYS[language].map((d) => (
             <span key={d}>{d}</span>
           ))}
         </div>

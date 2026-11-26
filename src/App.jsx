@@ -6,8 +6,9 @@ import BookingPage from "./pages/BookingPage";
 import PaymentPage from "./pages/PaymentPage";
 import Navbar from "./components/Navbar";
 import MuseumsPage from "./pages/MuseumsPage";
+import { LanguageProvider } from "./context/LanguageContext";
 
-function App() {
+function AppContent() {
   const [query, setQuery] = useState("");
 
   const params = new URLSearchParams(window.location.search);
@@ -35,6 +36,14 @@ function App() {
   }
 
   return <LoginPage />;
+}
+
+function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
+  );
 }
 
 export default App;
