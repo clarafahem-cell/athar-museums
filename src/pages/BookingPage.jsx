@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import Navbar from "../components/Navbar";
 import DatePicker from "../components/DatePicker";
 import TimeSlots from "../components/TimeSlots";
 import LanguageSelect from "../components/LanguageSelect";
@@ -8,7 +8,6 @@ import MuseumSelect from "../components/MuseumSelect";
 import TicketSelector from "../components/TicketSelector";
 import BookingSummary from "../components/BookingSummary";
 import { PRICES, TICKET_TYPES, VISITOR_TYPES } from "../data/bookingData";
-import logo from "../assets/images/logo.png";
 import "../styles/BookingPage.css";
 
 const BASE = import.meta.env.BASE_URL;
@@ -118,17 +117,10 @@ export default function BookingPage() {
 
   return (
     <main className="booking">
+      <Navbar variant="booking" />
+
       <div className="booking__inner">
-        <header className="booking__header">
-          <img className="booking__logo" src={logo} alt="Athar" />
-
-          <h1 className="booking__title">Book Your Ticket</h1>
-
-          <a className="booking__back" href={`${BASE}?page=museums`}>
-            <ArrowLeft strokeWidth={2.2} />
-            Back to Home
-          </a>
-        </header>
+        <h1 className="booking__page-title">Book Your Ticket</h1>
 
         <div className="booking__body">
           <section className="booking__card">

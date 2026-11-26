@@ -1,16 +1,29 @@
 
 import { useState, useEffect, useRef } from "react";
-import { Search, X, Globe, ChevronDown } from "lucide-react";
+import {
+  Search,
+  X,
+  Globe,
+  ChevronDown,
+  ArrowLeft,
+} from "lucide-react";
 import "../styles/Navbar.css";
 import logo from "../assets/images/logo.png";
 
-function Navbar({ query = "", onQueryChange = () => {} }) {
+const BASE = import.meta.env.BASE_URL;
+
+function Navbar({
+  query = "",
+  onQueryChange = () => {},
+  variant = "default",
+}) {
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [language, setLanguage] = useState("EN");
   const inputRef = useRef(null);
 
   const closeMenu = () => setOpen(false);
+  const isBooking = variant === "booking";
 
   useEffect(() => {
     const onKey = (e) => {
@@ -33,6 +46,28 @@ function Navbar({ query = "", onQueryChange = () => {} }) {
     if (searchOpen) inputRef.current?.focus();
   }, [searchOpen]);
 
+  // Navbar الخاص بصفحة الحجز
+  if (isBooking) {
+    return (
+      <header className="navbar navbar--booking">
+        <div className="navbar__brand">
+          <div className="navbar__logo">
+            <img src={logo} alt="Athar logo" />
+          </div>
+        </div>
+
+        <a
+          className="navbar__back"
+          href={`${BASE}?page=museums`}
+        >
+          <ArrowLeft size={18} strokeWidth={2.2} />
+          <span>Back to Home</span>
+        </a>
+      </header>
+    );
+  }
+
+  // Navbar العادي لباقي الصفحات
   return (
     <header className="navbar">
       <div className="navbar__brand">
@@ -120,7 +155,7 @@ function Navbar({ query = "", onQueryChange = () => {} }) {
           type="button"
           className="navbar__book"
           onClick={() => {
-            window.location.href = "?page=booking";
+            window.location.href = `${BASE}?page=booking`;
           }}
         >
           <svg
