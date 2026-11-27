@@ -5,6 +5,8 @@ import civilizationMuseum from "../assets/images/civilization-museum.jpg";
 import luxorMuseum from "../assets/images/luxor-museum.jpg";
 import islamicArtMuseum from "../assets/images/islamic-art-museum.jpg";
 import nubianMuseum from "../assets/images/nubian-museum.jpg";
+import grandMuseumMask from "../assets/images/grand-museum-mask.png";
+import grandMuseumHall from "../assets/images/grand-museum-hall.png";
 
 const museums = [
   {
@@ -17,10 +19,11 @@ const museums = [
     typeAr: "متحف قومي",
     popularity: 100,
     description:
-      "A world-class museum featuring ancient Egyptian artifacts and the complete collection of King Tutankhamun's treasures.",
+      "A modern masterpiece showcasing Egypt's ancient civilization in a stunning, immersive experience. Step into galleries that tell the story of Egypt's greatest treasures, from the earliest dynasties to the Greco-Roman era.",
     descriptionAr:
       "متحف عالمي يضم مجموعة متميزة من الآثار المصرية القديمة ومجموعة كنوز الملك توت عنخ آمون الكاملة.",
     image: grandMuseum,
+    images: [grandMuseum, grandMuseumMask, grandMuseumHall],
   },
   {
     id: 2,

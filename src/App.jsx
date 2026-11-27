@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -6,6 +5,7 @@ import BookingPage from "./pages/BookingPage";
 import PaymentPage from "./pages/PaymentPage";
 import Navbar from "./components/Navbar";
 import MuseumsPage from "./pages/MuseumsPage";
+import MuseumDetailsPage from "./pages/MuseumDetailsPage";
 import { LanguageProvider } from "./context/LanguageContext";
 
 function AppContent() {
@@ -23,6 +23,14 @@ function AppContent() {
     );
   }
 
+if (page === "museum-details") {
+  return (
+    <div>
+      <Navbar query={query} onQueryChange={setQuery} />
+      <MuseumDetailsPage />
+    </div>
+  );
+}
   if (page === "signup") {
     return <SignupPage />;
   }

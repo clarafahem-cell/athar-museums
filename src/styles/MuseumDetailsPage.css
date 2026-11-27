@@ -1,0 +1,21 @@
+.museum-details-page {
+  min-height: 100vh;
+  width: 100%;
+  background: #fff;
+  color: #28251f;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.museum-details-content {
+  margin: 0;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.museum-details-page.rtl .museum-details-content {
+  margin: 0;
+  width: 100%;
+  text-align: right;
+}
