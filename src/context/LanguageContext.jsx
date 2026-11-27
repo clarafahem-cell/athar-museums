@@ -36,13 +36,9 @@ const translations = {
 };
 
 export function LanguageProvider({ children }) {
-  const [language, setLanguage] = useState(() => {
-    return localStorage.getItem("atharLanguage") || "EN";
-  });
+  const [language, setLanguage] = useState("EN");
 
   useEffect(() => {
-    localStorage.setItem("atharLanguage", language);
-
     document.documentElement.lang = language === "AR" ? "ar" : "en";
     document.documentElement.dir = language === "AR" ? "rtl" : "ltr";
   }, [language]);

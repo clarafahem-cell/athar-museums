@@ -165,7 +165,7 @@ export default function DatePicker({ value, onChange }) {
                 className={`date-picker__day ${
                   sameDay(date, value) ? "is-selected" : ""
                 }`}
-                disabled={date < today}
+                disabled={date <= today}
                 onClick={() => pick(date)}
               >
                 {date.getDate()}
